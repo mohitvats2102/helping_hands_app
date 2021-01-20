@@ -7,28 +7,34 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Color(0xFF006BFF),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Helping',
-                style: kloginText,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 18, top: 15),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Helping',
+                    style: kloginText,
+                  ),
+                  Text(
+                    'Hands',
+                    style: kloginText.copyWith(
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
+                ],
               ),
-              Text(
-                'Hands',
-                style: kloginText.copyWith(
-                  fontWeight: FontWeight.w900,
-                ),
+            ),
+            SizedBox(height: 60),
+            Expanded(
+              child: Container(
+                decoration: kloginContainerDecoration,
               ),
-              Form(
-                child: Column(
-                  children: [],
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
