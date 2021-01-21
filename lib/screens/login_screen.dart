@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:helping_hands_app/constant.dart';
 
+import '../service/auth_form.dart';
+
 class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF006BFF),
+      backgroundColor: Theme.of(context).primaryColor,
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,6 +34,7 @@ class LoginScreen extends StatelessWidget {
             Expanded(
               child: Container(
                 decoration: kloginContainerDecoration,
+                child: AuthForm(),
               ),
             ),
           ],
