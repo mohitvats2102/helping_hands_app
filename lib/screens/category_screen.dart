@@ -32,8 +32,24 @@ class CategoryScreen extends StatelessWidget {
                 child: Icon(Icons.more_vert, color: Colors.white),
               ),
               items: [
-                DropdownMenuItem(value: "Change Theme", child: Text("Theme")),
-                DropdownMenuItem(value: "Logout", child: Text("Logout"))
+                DropdownMenuItem(
+                  value: 'Change Theme',
+                  child: Text(
+                    "Theme",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+                DropdownMenuItem(
+                  value: "Logout",
+                  child: Text(
+                    "Logout",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                )
               ],
               onChanged: (itemIdentifier) {
                 if (itemIdentifier == 'Change Theme') {
@@ -68,4 +84,3 @@ class CategoryScreen extends StatelessWidget {
     );
   }
 }
-
