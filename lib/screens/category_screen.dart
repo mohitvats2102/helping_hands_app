@@ -46,7 +46,7 @@ class CategoryScreen extends StatelessWidget {
                   child: Text(
                     "Logout",
                     style: TextStyle(
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 )
