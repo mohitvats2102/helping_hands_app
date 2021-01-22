@@ -30,7 +30,6 @@ const BoxDecoration kloginContainerDecoration = BoxDecoration(
 );
 
 const InputDecoration klogininput = InputDecoration(
-  focusColor: Colors.amber,
   icon: Icon(
     Icons.email_outlined,
     color: kdarkBlue,
