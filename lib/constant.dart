@@ -4,7 +4,7 @@ const Color kdarkBlue = Color(0xFF006BFF);
 
 const TextStyle kloginText = TextStyle(
   color: Colors.white,
-  fontSize: 45,
+  fontSize: 50,
   fontWeight: FontWeight.w400,
 );
 

@@ -27,7 +27,7 @@ class CategoryScreen extends StatelessWidget {
               logout(context);
             },
             child: Padding(
-              padding: const EdgeInsets.only(right: 12),
+              padding: const EdgeInsets.only(right: 13),
               child: Icon(Icons.logout, color: Colors.white, size: 25),
             ),
           ),
@@ -57,13 +57,13 @@ class CategoryScreen extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: 35),
+            SizedBox(height: 50),
             Expanded(
               child: Container(
                 decoration: kloginContainerDecoration,
                 child: Padding(
                   padding: const EdgeInsets.only(
-                      left: 18, top: 12, right: 10, bottom: 4),
+                      left: 18, top: 12, right: 12, bottom: 4),
                   child: GridView(
                     children: Demo_Example.map(
                       (catData) => GridViewFileFrame(
