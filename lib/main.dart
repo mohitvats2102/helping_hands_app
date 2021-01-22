@@ -11,43 +11,29 @@ void main() async {
   runApp(MyApp());
 }
 
-class MyApp extends StatefulWidget {
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-   bool theme1 =false;
-
-  void changetheme()
-  {
-    setState(() {
-       theme1=!theme1;
-    });
-  }
-
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: theme1?ThemeData.dark():ThemeData(
+      theme: ThemeData(
         accentColor: Colors.white,
         primaryColor: Color(0xFF006BFF),
         fontFamily: 'Montserrat',
       ),
-       title: 'Helping Hands',
+      title: 'Helping Hands',
       home: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (ctx, userSnapShot) {
           if (userSnapShot.hasData) {
-            return CategoryScreen(changetheme);
+            return CategoryScreen();
           }
           return LoginScreen();
         },
       ),
       routes: {
         LoginScreen.loginScreen: (context) => LoginScreen(),
-        CategoryScreen.categoryScreen: (context) => CategoryScreen(changetheme),
+        CategoryScreen.categoryScreen: (context) => CategoryScreen(),
       },
     );
   }
