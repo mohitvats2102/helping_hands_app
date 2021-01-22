@@ -118,7 +118,7 @@ class _AuthFormState extends State<AuthForm> {
                   style: TextStyle(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
-                onPressed: null, //onSave,
+                onPressed: onSave,
                 color: kdarkBlue,
               ),
               SizedBox(height: _islogin ? 50 : 20),

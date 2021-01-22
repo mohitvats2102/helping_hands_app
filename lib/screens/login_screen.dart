@@ -4,9 +4,12 @@ import 'package:flutter/services.dart';
 import 'package:helping_hands_app/constant.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
+import '../screens/category_screen.dart';
 import '../service/auth_form.dart';
 
 class LoginScreen extends StatefulWidget {
+  static String loginScreen = '/loginscreen';
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -37,6 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
       setState(() {
         _isStartRegister = false;
       });
+      Navigator.of(context).pushReplacementNamed(CategoryScreen.categoryScreen);
     } on PlatformException catch (err) {
       setState(() {
         _isStartRegister = false;
