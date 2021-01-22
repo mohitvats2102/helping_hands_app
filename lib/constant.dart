@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+const Color kdarkBlue = Color(0xFF006BFF);
+
 const TextStyle kloginText = TextStyle(
   color: Colors.white,
   fontSize: 45,
@@ -31,7 +33,7 @@ const InputDecoration klogininput = InputDecoration(
   focusColor: Colors.amber,
   icon: Icon(
     Icons.email_outlined,
-    color: Color(0xFF006BFF),
+    color: kdarkBlue,
   ),
   hintText: 'E-mail address',
 );
