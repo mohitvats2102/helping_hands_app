@@ -3,20 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:helping_hands_app/Widget/GridViewFileFrame.dart';
 import 'package:helping_hands_app/demo_examples.dart';
 import 'package:helping_hands_app/module/GridViewFile.dart';
-class  CategoryScreen extends StatefulWidget {
+import 'package:helping_hands_app/screens/login_screen.dart';
+class  CategoryScreen extends StatelessWidget {
    final FirebaseAuth _auth = FirebaseAuth.instance;
 
   static String categoryScreen = '/categoryScreen';
   final  Function changetheme;
  CategoryScreen(this.changetheme);
   @override
-  _CategoryScreenState createState() => _CategoryScreenState();
-}
+ // _CategoryScreenState createState() => _CategoryScreenState();
+//}
 
-class _CategoryScreenState extends State<CategoryScreen> {
-  void logout()
+//class _CategoryScreenState extends State<CategoryScreen> {
+  void logout(BuildContext ctx)
   {
-    FirebaseAuth.instance.signOut();
+    _auth.signOut();
+    Navigator.of(ctx).pushReplacementNamed(LoginScreen.loginScreen);
+
   }
   @override
   Widget build(BuildContext context) {
@@ -41,11 +44,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       {
                          if(itemIdentifier=='Theme')
                          {
-                              widget.changetheme();
+                              changetheme();
                          }
                          if(itemIdentifier=='Logout')
                          {
-                               logout();
+                               logout(context);
                          }
                       },),)],
       
