@@ -2,41 +2,45 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:helping_hands_app/Widget/GridViewFileFrame.dart';
 import 'package:helping_hands_app/demo_examples.dart';
+import 'package:helping_hands_app/screens/login_screen.dart';
 
-class CategoryScreen extends StatefulWidget {
+class CategoryScreen extends StatelessWidget {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   static String categoryScreen = '/categoryScreen';
   final Function changetheme;
   CategoryScreen(this.changetheme);
-  @override
-  _CategoryScreenState createState() => _CategoryScreenState();
-}
 
-class _CategoryScreenState extends State<CategoryScreen> {
-  void logout() {
-    FirebaseAuth.instance.signOut();
+  void logout(BuildContext context) {
+    _auth.signOut();
+    Navigator.of(context).pushReplacementNamed(LoginScreen.loginScreen);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Ctaegories"),
+        title: Text(
+          "CATEGORIES",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         actions: [
           DropdownButtonHideUnderline(
             child: DropdownButton(
-              icon: Icon(Icons.more_vert),
+              icon: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Icon(Icons.more_vert, color: Colors.white),
+              ),
               items: [
-                DropdownMenuItem(value: "Theme", child: Text("Theme")),
+                DropdownMenuItem(value: "Change Theme", child: Text("Theme")),
                 DropdownMenuItem(value: "Logout", child: Text("Logout"))
               ],
               onChanged: (itemIdentifier) {
-                if (itemIdentifier == 'Theme') {
-                  widget.changetheme();
+                if (itemIdentifier == 'Change Theme') {
+                  changetheme();
                 }
                 if (itemIdentifier == 'Logout') {
-                  logout();
+                  logout(context);
                 }
               },
             ),
@@ -64,3 +68,4 @@ class _CategoryScreenState extends State<CategoryScreen> {
     );
   }
 }
+
