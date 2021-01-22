@@ -10,12 +10,7 @@ class  CategoryScreen extends StatelessWidget {
   static String categoryScreen = '/categoryScreen';
   final  Function changetheme;
  CategoryScreen(this.changetheme);
-  @override
- // _CategoryScreenState createState() => _CategoryScreenState();
-//}
-
-//class _CategoryScreenState extends State<CategoryScreen> {
-  void logout(BuildContext ctx)
+void logout(BuildContext ctx)
   {
     _auth.signOut();
     Navigator.of(ctx).pushReplacementNamed(LoginScreen.loginScreen);
