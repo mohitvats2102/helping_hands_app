@@ -108,7 +108,7 @@ class _AuthFormState extends State<AuthForm> {
                   _password = value;
                 },
               ),
-              SizedBox(height: 50),
+              SizedBox(height: 20),
               RaisedButton(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5),
@@ -121,7 +121,7 @@ class _AuthFormState extends State<AuthForm> {
                 onPressed: onSave,
                 color: kdarkBlue,
               ),
-              SizedBox(height: 70),
+              SizedBox(height: _islogin ? 50 : 20),
               Text(
                 _islogin
                     ? 'Don\'t have any account.'
@@ -144,6 +144,11 @@ class _AuthFormState extends State<AuthForm> {
                     color: kdarkBlue,
                   ),
                 ),
+              ),
+              CircleAvatar(
+                radius: 30,
+                backgroundColor: Colors.white,
+                backgroundImage: AssetImage('assets/images/logo.jpg'),
               )
             ],
           ),
