@@ -1,9 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:helping_hands_app/constant.dart';
 import 'package:helping_hands_app/demo_examples.dart';
 import 'package:helping_hands_app/screens/login_screen.dart';
 import 'package:helping_hands_app/widget/GridViewFileFrame.dart';
+
+import '../widget/base_ui.dart';
 
 class CategoryScreen extends StatelessWidget {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -35,60 +36,98 @@ class CategoryScreen extends StatelessWidget {
       ),
       backgroundColor: Theme.of(context).primaryColor,
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 18),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Choose Your',
-                    style: kloginText.copyWith(fontSize: 40),
-                  ),
-                  Text(
-                    'Category',
-                    style: kloginText.copyWith(
-                      fontWeight: FontWeight.w800,
-                      fontSize: 40,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 50),
-            Expanded(
-              child: Container(
-                decoration: kloginContainerDecoration,
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      left: 18, top: 12, right: 12, bottom: 4),
-                  child: GridView(
-                    children: Demo_Example.map(
-                      (catData) => GridViewFileFrame(
-                        catData.id,
-                        catData.title,
-                        catData.color,
-                        catData.assetImage,
-                      ),
-                    ).toList(),
-                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 200,
-                      childAspectRatio: 0.9,
-                      crossAxisSpacing: 20,
-                      mainAxisSpacing: 20,
-                    ),
-                  ),
+        child: BaseUI(
+          padding: const EdgeInsets.only(left: 18),
+          text1: 'Choose Your',
+          text2: 'Category',
+          height: 50,
+          fontsize: 40,
+          fontWeight: FontWeight.w800,
+          radius: BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
+          ),
+          child: Padding(
+            padding:
+                const EdgeInsets.only(left: 12, top: 10, right: 12, bottom: 4),
+            child: GridView(
+              children: Demo_Example.map(
+                (catData) => GridViewFileFrame(
+                  catData.id,
+                  catData.title,
+                  catData.color,
+                  catData.assetImage,
                 ),
+              ).toList(),
+              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: 200,
+                childAspectRatio: 0.9,
+                crossAxisSpacing: 20,
+                mainAxisSpacing: 20,
               ),
             ),
-          ],
+          ),
         ),
       ),
     );
   }
 }
+
+// Column(
+// crossAxisAlignment: CrossAxisAlignment.start,
+// children: [
+// Padding(
+// padding: const EdgeInsets.only(left: 18),
+// child: Column(
+// crossAxisAlignment: CrossAxisAlignment.start,
+// children: [
+// Text(
+// 'Choose Your',
+// style: kloginText.copyWith(fontSize: 40),
+// ),
+// Text(
+// 'Category',
+// style: kloginText.copyWith(
+// fontWeight: FontWeight.w800,
+// fontSize: 40,
+// ),
+// ),
+// ],
+// ),
+// ),
+// SizedBox(height: 50),
+// Expanded(
+// child: Container(
+// decoration: kloginContainerDecoration.copyWith(
+// borderRadius: BorderRadius.only(
+// topLeft: Radius.circular(20),
+// topRight: Radius.circular(20),
+// ),
+// ),
+// child: Padding(
+// padding: const EdgeInsets.only(
+// left: 12, top: 10, right: 12, bottom: 4),
+// child: GridView(
+// children: Demo_Example.map(
+// (catData) => GridViewFileFrame(
+// catData.id,
+// catData.title,
+// catData.color,
+// catData.assetImage,
+// ),
+// ).toList(),
+// gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+// maxCrossAxisExtent: 200,
+// childAspectRatio: 0.9,
+// crossAxisSpacing: 20,
+// mainAxisSpacing: 20,
+// ),
+// ),
+// ),
+// ),
+// ),
+//  ],
+//  ),
 
 // appBar: AppBar(
 // title: Text(

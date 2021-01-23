@@ -6,6 +6,7 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 import '../screens/category_screen.dart';
 import '../service/auth_form.dart';
+import '../widget/base_ui.dart';
 
 class LoginScreen extends StatefulWidget {
   static String loginScreen = '/loginscreen';
@@ -81,38 +82,52 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         inAsyncCall: _isStartRegister,
         child: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 18, top: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Helping',
-                      style: kloginText,
-                    ),
-                    Text(
-                      'Hands',
-                      style: kloginText.copyWith(
-                        fontWeight: FontWeight.w900,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 100),
-              Expanded(
-                child: Container(
-                  decoration: kloginContainerDecoration,
-                  child: AuthForm(tryLoginUser),
-                ),
-              ),
-            ],
+          child: BaseUI(
+            padding: const EdgeInsets.only(
+                left: 18, top: 20), //this is to simplyfy widget tree
+            text1: 'Helping',
+            text2: 'Hands',
+            fontWeight: FontWeight.w900,
+            fontsize: 50,
+            height: 100,
+            radius: BorderRadius.only(
+              topLeft: Radius.circular(40),
+            ),
+            child: AuthForm(tryLoginUser),
           ),
         ),
       ),
     );
   }
 }
+
+// Column(
+// crossAxisAlignment: CrossAxisAlignment.start,
+// children: [
+// Padding(
+// padding: const EdgeInsets.only(left: 18, top: 20),
+// child: Column(
+// crossAxisAlignment: CrossAxisAlignment.start,
+// children: [
+// Text(
+// 'Helping',
+// style: kloginText,
+// ),
+// Text(
+// 'Hands',
+// style: kloginText.copyWith(
+// fontWeight: FontWeight.w900,
+// ),
+// ),
+// ],
+// ),
+// ),
+// SizedBox(height: 100),
+// Expanded(
+// child: Container(
+// decoration: kloginContainerDecoration,
+// child: AuthForm(tryLoginUser),
+// ),
+// ),
+// ],
+// ),
