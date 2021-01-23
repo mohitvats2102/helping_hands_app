@@ -57,12 +57,12 @@ class CategoryScreen extends StatelessWidget {
           padding: const EdgeInsets.only(left: 18),
           text1: 'Choose Your',
           text2: 'Service',
-          height: 40,
-          fontsize: 32,
+          height: 45,
+          fontsize: 35,
           fontWeight: FontWeight.w800,
           radius: BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20),
+            topLeft: Radius.circular(30),
+            topRight: Radius.circular(30),
           ),
           child: Padding(
             padding:
