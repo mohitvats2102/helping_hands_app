@@ -1,3 +1,5 @@
+import '../screens/worker_screen.dart';
+
 import 'package:flutter/material.dart';
 
 class GridViewFileFrame extends StatelessWidget {
@@ -10,7 +12,11 @@ class GridViewFileFrame extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: null,
+      onTap: ()=>Navigator.of(context).pushNamed(WorkerScreen.workerscreen,arguments:{
+        'id':id,
+        'title':title,
+        'assetImage':assetImage
+      } ),
       splashColor: Theme.of(context).primaryColor,
       child: Card(
         shape: RoundedRectangleBorder(

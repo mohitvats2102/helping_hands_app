@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:helping_hands_app/screens/login_screen.dart';
+import 'package:helping_hands_app/screens/worker_screen.dart';
 
 import './screens/category_screen.dart';
 
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
       routes: {
         LoginScreen.loginScreen: (context) => LoginScreen(),
         CategoryScreen.categoryScreen: (context) => CategoryScreen(),
+        WorkerScreen.workerscreen:(context)=>WorkerScreen()
       },
     );
   }
