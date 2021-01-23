@@ -13,8 +13,8 @@ class BaseUI extends StatelessWidget {
   BaseUI(
       {this.fontWeight,
       this.padding,
-      this.text2,
-      this.text1,
+      this.text2 = '',
+      this.text1 = '',
       this.height,
       this.child,
       this.fontsize,

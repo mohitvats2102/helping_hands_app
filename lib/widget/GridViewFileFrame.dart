@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 class GridViewFileFrame extends StatelessWidget {
   final String id;
   final String title;
-  final Color color;
   final String assetImage;
 
-  GridViewFileFrame(this.id, this.title, this.color, this.assetImage);
+  GridViewFileFrame(this.id, this.title, this.assetImage);
 
   @override
   Widget build(BuildContext context) {
@@ -80,47 +79,3 @@ class GridViewFileFrame extends StatelessWidget {
 // borderRadius: BorderRadius.circular(15),
 // ),
 // ),
-
-//
-// Card(
-// shape: RoundedRectangleBorder(
-// borderRadius: BorderRadius.circular(20),
-// ),
-// elevation: 20,
-// margin: EdgeInsets.all(10),
-// child:
-// Stack(
-// children: <Widget>[
-// ClipRRect(
-// borderRadius: BorderRadius.only(
-// topLeft: Radius.circular(20),
-// topRight: Radius.circular(20),
-// ),
-// child: Image.asset(
-// '',
-// width: double.infinity,
-// height: 250,
-// fit: BoxFit.cover,
-// ),
-// ),
-// Positioned(
-// //this positioned widget only works in stack...
-// bottom: 20,
-// right: 10,
-// child: Container(
-// width: 300,
-// color: Colors.black54,
-// child: Text(
-// title,
-// style: TextStyle(
-// fontSize: 24,
-// fontWeight: FontWeight.bold,
-// color: Colors.white,
-// ),
-// overflow: TextOverflow.fade,
-// softWrap: true,
-// ),
-// ),
-// )
-// ],
-// ),),
