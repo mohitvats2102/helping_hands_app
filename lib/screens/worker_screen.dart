@@ -40,11 +40,12 @@ class WorkerScreen extends StatelessWidget {
                     SizedBox(height: 10.0),
                     Expanded(
                       child: ListView.builder(
-                          itemCount: Demo_Worker.length,
-                          itemBuilder: (ctx, index) => Worker(
-                              name: Demo_Worker[index].name,
-                              rating: Demo_Worker[index].rating,
-                              image: Demo_Worker[index].image)),
+                        itemCount: Demo_Worker.length,
+                        itemBuilder: (ctx, index) => Worker(
+                            name: Demo_Worker[index].name,
+                            rating: Demo_Worker[index].rating,
+                            image: Demo_Worker[index].image),
+                      ),
                     ),
                   ],
                 ),
