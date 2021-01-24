@@ -1,22 +1,25 @@
-import '../screens/worker_screen.dart';
-
 import 'package:flutter/material.dart';
 
-class GridViewFileFrame extends StatelessWidget {
+import '../screens/worker_screen.dart';
+
+class CategoryItem extends StatelessWidget {
   final String id;
   final String title;
   final String assetImage;
 
-  GridViewFileFrame(this.id, this.title, this.assetImage);
+  CategoryItem(this.id, this.title, this.assetImage);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: ()=>Navigator.of(context).pushNamed(WorkerScreen.workerscreen,arguments:{
-        'id':id,
-        'title':title,
-        'assetImage':assetImage
-      } ),
+      onTap: () => Navigator.of(context).pushNamed(
+        WorkerScreen.workerscreen,
+        arguments: {
+          'id': id,
+          'title': title,
+          'assetImage': assetImage,
+        },
+      ),
       splashColor: Theme.of(context).primaryColor,
       child: Card(
         shape: RoundedRectangleBorder(
@@ -28,11 +31,14 @@ class GridViewFileFrame extends StatelessWidget {
           children: <Widget>[
             ClipRRect(
               borderRadius: BorderRadius.circular(20),
-              child: Image.asset(
-                assetImage,
-                width: double.infinity,
-                height: 250,
-                fit: BoxFit.fill,
+              child: Hero(
+                tag: 'animation$title',
+                child: Image.asset(
+                  assetImage,
+                  width: double.infinity,
+                  height: 250,
+                  fit: BoxFit.fill,
+                ),
               ),
             ),
             Positioned(

@@ -9,7 +9,7 @@ import '../service/auth_form.dart';
 import '../widget/base_ui.dart';
 
 class LoginScreen extends StatefulWidget {
-  static String loginScreen = '/loginscreen';
+  static const String loginScreen = '/loginscreen';
 
   @override
   _LoginScreenState createState() => _LoginScreenState();

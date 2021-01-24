@@ -1,41 +1,41 @@
-import './module/workerinfo.dart';
+import './models/worker_blueprint.dart';
 
 const Demo_Worker = const [
-  WorkerInfo(
+  WorkerBlueprint(
       name: 'Charu Singh',
       rating: 3.5,
       image: 'assets/images/contactimage.png'),
-  WorkerInfo(
+  WorkerBlueprint(
       name: 'Mohit Vats', rating: 4.5, image: 'assets/images/contactimage.png'),
-  WorkerInfo(
+  WorkerBlueprint(
       name: 'Mahima Singh',
       rating: 4.4,
       image: 'assets/images/contactimage.png'),
-  WorkerInfo(
+  WorkerBlueprint(
       name: 'Kunal Singh',
       rating: 2.5,
       image: 'assets/images/contactimage.png'),
-  WorkerInfo(
+  WorkerBlueprint(
       name: 'Yashwant Singh',
       rating: 3.6,
       image: 'assets/images/contactimage.png'),
-  WorkerInfo(
+  WorkerBlueprint(
       name: 'Kulwant Singh',
       rating: 2.7,
       image: 'assets/images/contactimage.png'),
-  WorkerInfo(
+  WorkerBlueprint(
       name: 'Chandan Singh',
       rating: 5.0,
       image: 'assets/images/contactimage.png'),
-  WorkerInfo(
+  WorkerBlueprint(
       name: 'Shivani Singh',
       rating: 5.0,
       image: 'assets/images/contactimage.png'),
-  WorkerInfo(
+  WorkerBlueprint(
       name: 'Parul Singh',
       rating: 4.3,
       image: 'assets/images/contactimage.png'),
-  WorkerInfo(
+  WorkerBlueprint(
       name: 'Nikita Sharma',
       rating: 4.2,
       image: 'assets/images/contactimage.png'),

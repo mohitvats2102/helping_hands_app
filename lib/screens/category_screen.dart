@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:helping_hands_app/constant.dart';
 import 'package:helping_hands_app/demo_examples.dart';
 import 'package:helping_hands_app/screens/login_screen.dart';
-import 'package:helping_hands_app/widget/GridViewFileFrame.dart';
+import 'package:helping_hands_app/widget/category_item.dart';
 
 import '../widget/base_ui.dart';
 
 class CategoryScreen extends StatelessWidget {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  static String categoryScreen = '/categoryScreen';
+  static const String categoryScreen = '/categoryScreen';
 
   void logout(BuildContext context) {
     _auth.signOut();
@@ -69,7 +69,7 @@ class CategoryScreen extends StatelessWidget {
                 const EdgeInsets.only(left: 12, top: 10, right: 12, bottom: 4),
             child: GridView(
               children: Demo_Example.map(
-                (catData) => GridViewFileFrame(
+                (catData) => CategoryItem(
                   catData.id,
                   catData.title,
                   catData.assetImage,
