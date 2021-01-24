@@ -45,7 +45,6 @@ class MyApp extends StatelessWidget {
               child: LoginScreen(),
               curve: Curves.linear,
               type: PageTransitionType.topToBottom,
-              // alignment: Alignment.topCenter,
             );
             break;
 
@@ -54,7 +53,6 @@ class MyApp extends StatelessWidget {
               child: CategoryScreen(),
               curve: Curves.linear,
               type: PageTransitionType.bottomToTop,
-              // alignment: Alignment.topCenter,
             );
             break;
           case WorkerScreen.workerscreen:
@@ -62,9 +60,10 @@ class MyApp extends StatelessWidget {
               child: WorkerScreen(),
               curve: Curves.linear,
               // childCurrent: this,  childCurrent is used when we use any 'joined' page transition
-              type: PageTransitionType.rightToLeft,
-              alignment: Alignment.topCenter,
-              settings: settings,
+              type: PageTransitionType.fade,
+
+              settings:
+                  settings, //setting argument is used when we are passing Data through NamedRoutes just like in WorkerScreen()
             );
             break;
           default:

@@ -5,6 +5,9 @@ class WorkerBlueprint {
   final double rating;
   //final PhoneAuthCredential phonenumber;
   final String image;
-  const WorkerBlueprint(
-      {@required this.name, @required this.rating, @required this.image});
+  const WorkerBlueprint({
+    @required this.name,
+    @required this.rating,
+    @required this.image,
+  });
 }

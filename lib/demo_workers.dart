@@ -6,7 +6,10 @@ const Demo_Worker = const [
       rating: 3.5,
       image: 'assets/images/contactimage.png'),
   WorkerBlueprint(
-      name: 'Mohit Vats', rating: 4.5, image: 'assets/images/contactimage.png'),
+    name: 'Mohit Vats',
+    rating: 4.5,
+    image: 'assets/images/contactimage.png',
+  ),
   WorkerBlueprint(
       name: 'Mahima Singh',
       rating: 4.4,

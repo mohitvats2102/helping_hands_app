@@ -5,6 +5,9 @@ class CategoryItemBlueprint {
   final String title;
   final String assetImage;
 
-  const CategoryItemBlueprint(
-      {@required this.id, @required this.title, this.assetImage});
+  const CategoryItemBlueprint({
+    @required this.id,
+    @required this.title,
+    this.assetImage,
+  });
 }
