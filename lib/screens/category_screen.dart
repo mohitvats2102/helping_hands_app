@@ -35,9 +35,9 @@ class CategoryScreen extends StatelessWidget {
                   value: "Logout",
                   child: Row(
                     children: [
-                      Icon(Icons.logout, color: kdarkBlue),
-                      SizedBox(width: 10),
-                      Text("Logout", style: TextStyle(color: kdarkBlue)),
+                      const Icon(Icons.logout, color: kdarkBlue),
+                      const SizedBox(width: 10),
+                      const Text("Logout", style: TextStyle(color: kdarkBlue)),
                     ],
                   ),
                 )
@@ -54,13 +54,13 @@ class CategoryScreen extends StatelessWidget {
       backgroundColor: Theme.of(context).primaryColor,
       body: SafeArea(
         child: BaseUI(
-          padding: const EdgeInsets.only(left: 18),
+          padding: const EdgeInsets.only(left: 18, top: 10),
           text1: 'Choose Your',
           text2: 'Service',
-          height: 45,
-          fontsize: 35,
+          height: 50,
+          fontsize: 45,
           fontWeight: FontWeight.w800,
-          radius: BorderRadius.only(
+          radius: const BorderRadius.only(
             topLeft: Radius.circular(30),
             topRight: Radius.circular(30),
           ),
@@ -75,7 +75,7 @@ class CategoryScreen extends StatelessWidget {
                   catData.assetImage,
                 ),
               ).toList(),
-              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                 maxCrossAxisExtent: 200,
                 childAspectRatio: 0.9,
                 crossAxisSpacing: 20,

@@ -19,11 +19,11 @@ class WorkerScreen extends StatelessWidget {
     final title = routeArgs['title'];
     final assetImage = routeArgs['assetImage'];
     return Scaffold(
-      appBar: AppBar(
-        title: Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
-        backgroundColor: Theme.of(context).primaryColor,
-        elevation: 0,
-      ),
+      // appBar: AppBar(
+      //   title: Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
+      //   backgroundColor: Theme.of(context).primaryColor,
+      //   elevation: 0,
+      // ),
       backgroundColor: Theme.of(context).primaryColor,
       body: Stack(
         children: [
@@ -39,16 +39,42 @@ class WorkerScreen extends StatelessWidget {
               tag: 'animation$title',
               child: Image.asset(
                 assetImage,
-                height: _mainScreenHeight * 0.35,
+                height: _mainScreenHeight * 0.40,
                 width: _mediaQuery.size.width,
-                fit: BoxFit.fill,
+                fit: BoxFit.cover,
               ),
+            ),
+          ),
+          Positioned(
+            top: _mediaQuery.padding.top + 10,
+            left: 10,
+            child: Row(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Icon(
+                    Icons.arrow_back_sharp,
+                    color: Colors.black87,
+                  ),
+                ),
+                SizedBox(width: 20),
+                Text(
+                  title,
+                  style: TextStyle(
+                    color: Colors.black87,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
             ),
           ),
           Positioned(
             bottom: 0,
             child: Container(
-              height: _mainScreenHeight * 0.68,
+              height: _mainScreenHeight * 0.75,
               width: _mediaQuery.size.width,
               decoration: kloginContainerDecoration.copyWith(
                 borderRadius: BorderRadius.only(
