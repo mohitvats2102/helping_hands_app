@@ -11,8 +11,8 @@ class WorkerItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.of(context).pushNamed(
+      onTap: () async {
+        var val = await Navigator.of(context).pushNamed(
           WorkerDetailScreen.worker_route,
           arguments: {
             'name': name,
@@ -20,6 +20,7 @@ class WorkerItem extends StatelessWidget {
             'image': image,
           },
         );
+        if (val != null) Navigator.of(context).pop();
       },
       child: Card(
         elevation: 5,

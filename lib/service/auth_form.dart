@@ -18,6 +18,7 @@ class AuthForm extends StatefulWidget {
 
 class _AuthFormState extends State<AuthForm> {
   bool _islogin = true;
+  bool _isPasswordHidden = true;
   final _formKey = GlobalKey<FormState>();
 
   String _email = '';
@@ -45,7 +46,7 @@ class _AuthFormState extends State<AuthForm> {
     return Form(
       key: _formKey,
       child: Padding(
-        padding: const EdgeInsets.only(left: 25, right: 25, top: 80),
+        padding: const EdgeInsets.only(left: 25, right: 25, top: 100),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -71,8 +72,8 @@ class _AuthFormState extends State<AuthForm> {
                   child: TextFormField(
                     key: ValueKey('user'),
                     decoration: klogininput.copyWith(
-                      hintText: 'username',
-                      icon: Icon(
+                      labelText: 'username',
+                      prefixIcon: Icon(
                         Icons.person_outline,
                         color: kdarkBlue,
                       ),
@@ -90,10 +91,33 @@ class _AuthFormState extends State<AuthForm> {
                 ),
               TextFormField(
                 key: ValueKey('password'),
-                obscureText: true,
+                obscureText: _isPasswordHidden,
                 decoration: klogininput.copyWith(
-                  hintText: 'password',
-                  icon: Icon(
+                  suffixIcon: _isPasswordHidden
+                      ? IconButton(
+                          onPressed: () {
+                            setState(() {
+                              _isPasswordHidden = !_isPasswordHidden;
+                            });
+                          },
+                          icon: Icon(
+                            Icons.visibility_outlined,
+                            color: kdarkBlue,
+                          ),
+                        )
+                      : IconButton(
+                          onPressed: () {
+                            setState(() {
+                              _isPasswordHidden = !_isPasswordHidden;
+                            });
+                          },
+                          icon: Icon(
+                            Icons.visibility_off_outlined,
+                            color: kdarkBlue,
+                          ),
+                        ),
+                  labelText: 'Password',
+                  prefixIcon: Icon(
                     Icons.lock_outline,
                     color: kdarkBlue,
                   ),

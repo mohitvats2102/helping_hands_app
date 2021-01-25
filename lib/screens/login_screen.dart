@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:helping_hands_app/constant.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 import '../screens/category_screen.dart';
@@ -77,9 +76,6 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       body: ModalProgressHUD(
-        progressIndicator: CircularProgressIndicator(
-          backgroundColor: kdarkBlue,
-        ),
         inAsyncCall: _isStartRegister,
         child: SafeArea(
           child: BaseUI(

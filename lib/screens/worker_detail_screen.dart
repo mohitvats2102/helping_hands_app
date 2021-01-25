@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:helping_hands_app/constant.dart';
 
+import 'confirm_booking.dart';
+
 class WorkerDetailScreen extends StatelessWidget {
   static const String worker_route =
       '/workerroute'; //remember not to give name same as WorkerScreen it will cause trouble
@@ -92,7 +94,15 @@ class WorkerDetailScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(15),
                         ),
                         color: kdarkBlue,
-                        onPressed: () {},
+                        onPressed: () async {
+                          var val = await Navigator.of(context).pushNamed(
+                            BookingScreen.bookingPageRoute,
+                            arguments: {
+                              'image': workerImage,
+                            },
+                          );
+                          if (val != null) Navigator.of(context).pop(val);
+                        },
                         icon: Icon(Icons.book_outlined, color: Colors.white),
                         label: Text(
                           'Book Now',
@@ -137,53 +147,51 @@ class WorkerDetailCard extends StatelessWidget {
       elevation: 5,
       child: Padding(
         padding: const EdgeInsets.all(10.0),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              ListTile(
-                leading: Icon(Icons.person, color: kdarkBlue),
-                title: Text(
-                  workerName,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        child: Column(
+          children: [
+            ListTile(
+              leading: Icon(Icons.person, color: kdarkBlue),
+              title: Text(
+                workerName,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              ),
+            ),
+            Divider(),
+            ListTile(
+              leading: Icon(Icons.location_on, color: kdarkBlue),
+              title: Text(
+                'Murli Colony, Ward No. 18, Shiv Hari Sadan , Near Jhulelal Temple , Sector 24 ,Khairthal  ',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
                 ),
               ),
-              Divider(),
-              ListTile(
-                leading: Icon(Icons.location_on, color: kdarkBlue),
-                title: Text(
-                  'Murli Colony, Ward No. 18, Shiv Hari Sadan , Near Jhulelal Temple , Sector 24 ,Khairthal  ',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
-                ),
+            ),
+            Divider(),
+            ListTile(
+              leading: Icon(Icons.phone, color: kdarkBlue),
+              title: Text(
+                '8949499892',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
-              Divider(),
-              ListTile(
-                leading: Icon(Icons.phone, color: kdarkBlue),
-                title: Text(
-                  '8949499892',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                ),
+            ),
+            Divider(),
+            ListTile(
+              leading: Icon(Icons.star, color: kdarkBlue),
+              title: Text(
+                rating.toString(),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
-              Divider(),
-              ListTile(
-                leading: Icon(Icons.star, color: kdarkBlue),
-                title: Text(
-                  rating.toString(),
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                ),
+            ),
+            Divider(),
+            ListTile(
+              leading: Icon(Icons.shop_outlined, color: kdarkBlue),
+              title: Text(
+                'Gada Electronics',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
-              Divider(),
-              ListTile(
-                leading: Icon(Icons.shop_outlined, color: kdarkBlue),
-                title: Text(
-                  'Gada Electronics',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

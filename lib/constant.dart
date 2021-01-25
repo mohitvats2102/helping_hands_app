@@ -30,9 +30,12 @@ const BoxDecoration kloginContainerDecoration = BoxDecoration(
 );
 
 const InputDecoration klogininput = InputDecoration(
-  icon: Icon(
+  prefixIcon: Icon(
     Icons.email_outlined,
     color: kdarkBlue,
   ),
-  hintText: 'E-mail address',
+  //hintText: 'E-mail address',
+  labelText: 'E-mail',
+  border:
+      OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
 );

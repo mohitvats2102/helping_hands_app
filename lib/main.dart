@@ -6,6 +6,7 @@ import 'package:helping_hands_app/screens/worker_screen.dart';
 import 'package:page_transition/page_transition.dart';
 
 import './screens/category_screen.dart';
+import './screens/confirm_booking.dart';
 import './screens/worker_detail_screen.dart';
 
 void main() async {
@@ -71,6 +72,17 @@ class MyApp extends StatelessWidget {
           case WorkerDetailScreen.worker_route:
             return PageTransition(
               child: WorkerDetailScreen(),
+              curve: Curves.linear,
+              // childCurrent: this,  childCurrent is used when we use any 'joined' page transition
+              type: PageTransitionType.rightToLeftWithFade,
+
+              settings:
+                  settings, //setting argument is used when we are passing Data through NamedRoutes just like in WorkerScreen()
+            );
+            break;
+          case BookingScreen.bookingPageRoute:
+            return PageTransition(
+              child: BookingScreen(),
               curve: Curves.linear,
               // childCurrent: this,  childCurrent is used when we use any 'joined' page transition
               type: PageTransitionType.rightToLeftWithFade,
