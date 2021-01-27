@@ -139,10 +139,10 @@ class _BookingScreenState extends State<BookingScreen> {
           child: BaseUI(
             text1: 'Confirm Your',
             text2: 'Booking',
-            fontsize: 42,
+            fontsize: 40,
             fontWeight: FontWeight.bold,
             padding: const EdgeInsets.only(left: 18),
-            height: 40,
+            height: 30,
             radius: const BorderRadius.only(
               topLeft: Radius.circular(30),
               topRight: Radius.circular(30),

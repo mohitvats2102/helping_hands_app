@@ -80,6 +80,7 @@ class WorkerScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(
                     bottom: 5, right: 5, top: 15, left: 5),
                 child: ListView.builder(
+                  physics: BouncingScrollPhysics(),
                   itemCount: Demo_Worker.length,
                   itemBuilder: (ctx, index) => WorkerItem(
                       name: Demo_Worker[index].name,

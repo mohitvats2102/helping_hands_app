@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:helping_hands_app/constant.dart';
 import 'package:helping_hands_app/demo_examples.dart';
 import 'package:helping_hands_app/screens/login_screen.dart';
@@ -57,8 +58,8 @@ class CategoryScreen extends StatelessWidget {
           padding: const EdgeInsets.only(left: 18, top: 10),
           text1: 'Choose Your',
           text2: 'Service',
-          height: 50,
-          fontsize: 45,
+          height: 30,
+          fontsize: 40,
           fontWeight: FontWeight.w800,
           radius: const BorderRadius.only(
             topLeft: Radius.circular(30),
@@ -68,6 +69,8 @@ class CategoryScreen extends StatelessWidget {
             padding:
                 const EdgeInsets.only(left: 12, top: 10, right: 12, bottom: 4),
             child: GridView(
+              // scrollDirection: Axis.horizontal,
+              physics: BouncingScrollPhysics(),
               children: Demo_Example.map(
                 (catData) => CategoryItem(
                   catData.id,
@@ -75,11 +78,11 @@ class CategoryScreen extends StatelessWidget {
                   catData.assetImage,
                 ),
               ).toList(),
-              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 200,
-                childAspectRatio: 0.9,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 1.1,
                 crossAxisSpacing: 20,
-                mainAxisSpacing: 20,
+                mainAxisSpacing: 10,
               ),
             ),
           ),
