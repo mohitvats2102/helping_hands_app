@@ -3,6 +3,7 @@ import 'package:helping_hands_app/constant.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
+import '../helpers/shared_pref_helper.dart';
 import '../widget/base_ui.dart';
 
 class BookingScreen extends StatefulWidget {
@@ -14,18 +15,50 @@ class BookingScreen extends StatefulWidget {
 
 class _BookingScreenState extends State<BookingScreen> {
   final _formKey = GlobalKey<FormState>();
+  SharedPrefHelper _pref = SharedPrefHelper();
+
+  TextEditingController _nameController = TextEditingController();
+  TextEditingController _addressController = TextEditingController();
+  TextEditingController _contactController = TextEditingController();
 
   bool _isBookingStart = false;
 
   DateTime _pickedDate;
   TimeOfDay _pickedTime;
-  var _name;
-  var _address;
-  var _phoneNumber;
+  String _name = '';
+  String _address = '';
+  String _phoneNumber = '';
+
+  @override
+  void initState() {
+    super.initState();
+    if (this.mounted) {
+      setState(() {
+        getUserName();
+      });
+    }
+  }
+
+  void getUserName() async {
+    _name = await _pref.getUserName();
+    _address = await _pref.getAddress();
+    _phoneNumber = await _pref.getContact();
+
+    _nameController.text = _name;
+    _addressController.text = _address;
+    _contactController.text = _phoneNumber;
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _contactController.dispose();
+    _addressController.dispose();
+    _nameController.dispose();
+  }
 
   void _trySavingForm() async {
     bool _isValid = _formKey.currentState.validate();
-
     if (_isValid) {
       _formKey.currentState.save();
     } else {
@@ -106,23 +139,26 @@ class _BookingScreenState extends State<BookingScreen> {
           child: BaseUI(
             text1: 'Confirm Your',
             text2: 'Booking',
-            fontsize: 50,
+            fontsize: 42,
             fontWeight: FontWeight.bold,
-            padding: const EdgeInsets.only(left: 18, top: 10),
-            height: 50,
+            padding: const EdgeInsets.only(left: 18),
+            height: 40,
             radius: const BorderRadius.only(
               topLeft: Radius.circular(30),
               topRight: Radius.circular(30),
             ),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+              padding: const EdgeInsets.only(
+                  left: 20, right: 20, top: 40, bottom: 10),
               child: Form(
                 key: _formKey,
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
                       TextFormField(
+                        controller: _nameController,
                         decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.person, color: kdarkBlue),
                           border: OutlineInputBorder(),
                           labelText: 'Your Name',
                         ),
@@ -136,10 +172,12 @@ class _BookingScreenState extends State<BookingScreen> {
                           _name = value;
                         },
                       ),
-                      SizedBox(height: 30),
+                      SizedBox(height: 20),
                       TextFormField(
-                        maxLines: 4,
+                        controller: _addressController,
+                        maxLines: 2,
                         decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.home_filled, color: kdarkBlue),
                           border: OutlineInputBorder(),
                           labelText: 'Your Address',
                         ),
@@ -153,10 +191,12 @@ class _BookingScreenState extends State<BookingScreen> {
                           _address = value;
                         },
                       ),
-                      SizedBox(height: 30),
+                      SizedBox(height: 20),
                       TextFormField(
+                        controller: _contactController,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.phone, color: kdarkBlue),
                           border: OutlineInputBorder(),
                           labelText: 'Your Contact No.',
                         ),
@@ -170,7 +210,7 @@ class _BookingScreenState extends State<BookingScreen> {
                           _phoneNumber = value;
                         },
                       ),
-                      SizedBox(height: 30),
+                      SizedBox(height: 20),
                       ChooseDateOrTime(
                         endText: _pickedDate == null
                             ? 'No Date Choosen'
@@ -221,7 +261,7 @@ class _BookingScreenState extends State<BookingScreen> {
                           });
                         },
                       ),
-                      SizedBox(height: 70),
+                      SizedBox(height: 20),
                       RaisedButton(
                         padding: const EdgeInsets.symmetric(
                           vertical: 12,

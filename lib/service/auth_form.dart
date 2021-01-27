@@ -46,7 +46,7 @@ class _AuthFormState extends State<AuthForm> {
     return Form(
       key: _formKey,
       child: Padding(
-        padding: const EdgeInsets.only(left: 25, right: 25, top: 100),
+        padding: const EdgeInsets.only(left: 25, right: 25, top: 50),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -170,7 +170,7 @@ class _AuthFormState extends State<AuthForm> {
                 ),
               ),
               CircleAvatar(
-                radius: 30,
+                radius: 25,
                 backgroundColor: Colors.white,
                 backgroundImage: AssetImage('assets/images/logo.jpg'),
               )

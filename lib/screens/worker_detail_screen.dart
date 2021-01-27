@@ -33,7 +33,7 @@ class WorkerDetailScreen extends StatelessWidget {
               tag: '$workerName',
               child: Image.asset(
                 workerImage,
-                height: _mainScreenHeight * 0.40,
+                height: _mainScreenHeight * 0.35,
                 width: _mediaQuery.size.width,
                 fit: BoxFit.cover,
               ),
@@ -68,7 +68,7 @@ class WorkerDetailScreen extends StatelessWidget {
           Positioned(
             bottom: 0,
             child: Container(
-              height: _mainScreenHeight * 0.75,
+              height: _mainScreenHeight * 0.80,
               width: _mediaQuery.size.width,
               decoration: kloginContainerDecoration.copyWith(
                 borderRadius: BorderRadius.only(
@@ -77,7 +77,8 @@ class WorkerDetailScreen extends StatelessWidget {
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.only(
+                    bottom: 5, top: 16, left: 10, right: 10),
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,

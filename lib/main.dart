@@ -7,6 +7,7 @@ import 'package:page_transition/page_transition.dart';
 
 import './screens/category_screen.dart';
 import './screens/confirm_booking.dart';
+import './screens/user_details_screen.dart';
 import './screens/worker_detail_screen.dart';
 
 void main() async {
@@ -40,6 +41,8 @@ class MyApp extends StatelessWidget {
       //   CategoryScreen.categoryScreen: (context) => CategoryScreen(),
       //   WorkerScreen.workerscreen: (context) => WorkerScreen(),
       //   WorkerDetailScreen.worker_route: (context) => WorkerDetailScreen(),
+      //   BookingScreen.bookingPageRoute: (context) => BookingScreen(),
+      //   UserDetailScreen.userDetailScreen: (context) => UserDetailScreen(),
       // },
       onGenerateRoute: (settings) {
         switch (settings.name) {
@@ -73,9 +76,7 @@ class MyApp extends StatelessWidget {
             return PageTransition(
               child: WorkerDetailScreen(),
               curve: Curves.linear,
-              // childCurrent: this,  childCurrent is used when we use any 'joined' page transition
               type: PageTransitionType.rightToLeftWithFade,
-
               settings:
                   settings, //setting argument is used when we are passing Data through NamedRoutes just like in WorkerScreen()
             );
@@ -84,9 +85,16 @@ class MyApp extends StatelessWidget {
             return PageTransition(
               child: BookingScreen(),
               curve: Curves.linear,
-              // childCurrent: this,  childCurrent is used when we use any 'joined' page transition
               type: PageTransitionType.rightToLeftWithFade,
-
+              settings:
+                  settings, //setting argument is used when we are passing Data through NamedRoutes just like in WorkerScreen()
+            );
+            break;
+          case UserDetailScreen.userDetailScreen:
+            return PageTransition(
+              child: UserDetailScreen(),
+              curve: Curves.linear,
+              type: PageTransitionType.rightToLeftWithFade,
               settings:
                   settings, //setting argument is used when we are passing Data through NamedRoutes just like in WorkerScreen()
             );

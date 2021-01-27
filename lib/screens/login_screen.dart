@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 import '../screens/category_screen.dart';
+import '../screens/user_details_screen.dart';
 import '../service/auth_form.dart';
 import '../widget/base_ui.dart';
 
@@ -27,24 +28,50 @@ class _LoginScreenState extends State<LoginScreen> {
       BuildContext ctx}) async {
     UserCredential authUser;
     try {
-      setState(() {
-        _isStartRegister = true;
-      });
       if (islogin) {
+        if (this.mounted) {
+          setState(() {
+            _isStartRegister = true;
+          });
+        }
         authUser = await _auth.signInWithEmailAndPassword(
             email: email, password: password);
+
+        if (this.mounted) {
+          setState(() {
+            _isStartRegister = false;
+          });
+        }
+
+        Navigator.of(context)
+            .pushReplacementNamed(CategoryScreen.categoryScreen);
       } else {
-        authUser = await _auth.createUserWithEmailAndPassword(
-            email: email, password: password);
+        var data = await Navigator.of(context)
+            .pushNamed(UserDetailScreen.userDetailScreen, arguments: username);
+        if (data == true) {
+          if (this.mounted) {
+            setState(() {
+              _isStartRegister = true;
+            });
+          }
+          await _auth.createUserWithEmailAndPassword(
+              email: email, password: password);
+          if (this.mounted) {
+            setState(() {
+              _isStartRegister = false;
+            });
+          }
+          Navigator.of(context)
+              .pushReplacementNamed(CategoryScreen.categoryScreen);
+        }
       }
-      setState(() {
-        _isStartRegister = false;
-      });
-      Navigator.of(context).pushReplacementNamed(CategoryScreen.categoryScreen);
     } on PlatformException catch (err) {
-      setState(() {
-        _isStartRegister = false;
-      });
+      if (this.mounted) {
+        setState(() {
+          _isStartRegister = false;
+        });
+      }
+
       String msg = 'Something went wrong please try again later';
       if (err.message != null) {
         msg = err.message;
@@ -58,9 +85,11 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       );
     } catch (err) {
-      setState(() {
-        _isStartRegister = false;
-      });
+      if (this.mounted) {
+        setState(() {
+          _isStartRegister = false;
+        });
+      }
       Scaffold.of(ctx).showSnackBar(
         SnackBar(
           content: Text(err.message),
