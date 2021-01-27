@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:helping_hands_app/constant.dart';
 import 'package:helping_hands_app/demo_workers.dart';
@@ -6,6 +7,7 @@ import '../widget/worker_item.dart';
 
 class WorkerScreen extends StatelessWidget {
   static const String workerscreen = '/workerscreen';
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -79,14 +81,40 @@ class WorkerScreen extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(
                     bottom: 5, right: 5, top: 15, left: 5),
-                child: ListView.builder(
-                  physics: BouncingScrollPhysics(),
-                  itemCount: Demo_Worker.length,
-                  itemBuilder: (ctx, index) => WorkerItem(
-                      name: Demo_Worker[index].name,
-                      rating: Demo_Worker[index].rating,
-                      image: Demo_Worker[index].image),
-                ),
+                child: title == 'Electrician'
+                    ? StreamBuilder<QuerySnapshot>(
+                        stream: _firestore
+                            .collection('categories/electrician/workers')
+                            .snapshots(),
+                        builder: (context, asyncSnapshot) {
+                          if (!asyncSnapshot.hasData) {
+                            return Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                          return ListView.builder(
+                              physics: BouncingScrollPhysics(),
+                              itemCount: asyncSnapshot.data.docs.length,
+                              itemBuilder: (ctx, index) {
+                                final _workerData =
+                                    asyncSnapshot.data.docs[index];
+
+                                return WorkerItem(
+                                  name: _workerData['name'],
+                                  rating: 4.5, //_workerData['rating'],
+                                  image: 'assets/images/contactimage.png',
+                                );
+                              });
+                        },
+                      )
+                    : ListView.builder(
+                        physics: BouncingScrollPhysics(),
+                        itemCount: Demo_Worker.length,
+                        itemBuilder: (ctx, index) => WorkerItem(
+                            name: Demo_Worker[index].name,
+                            rating: Demo_Worker[index].rating,
+                            image: Demo_Worker[index].image),
+                      ),
               ),
             ),
           ),
