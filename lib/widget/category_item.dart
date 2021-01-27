@@ -70,24 +70,3 @@ class CategoryItem extends StatelessWidget {
     );
   }
 }
-
-//Previous Code for Safty
-
-// Container(
-// padding: const EdgeInsets.fromLTRB(35.0, 30.0, 35.0, 80.0),
-// child: Text(
-// title,
-// style: Theme.of(context).textTheme.title,
-// ),
-// decoration: BoxDecoration(
-// gradient: LinearGradient(
-// colors: [
-// color.withOpacity(0.7),
-// color,
-// ],
-// begin: Alignment.topLeft,
-// end: Alignment.bottomRight,
-// ),
-// borderRadius: BorderRadius.circular(15),
-// ),
-// ),

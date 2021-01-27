@@ -18,11 +18,6 @@ class WorkerScreen extends StatelessWidget {
     final title = routeArgs['title'];
     final assetImage = routeArgs['assetImage'];
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
-      //   backgroundColor: Theme.of(context).primaryColor,
-      //   elevation: 0,
-      // ),
       backgroundColor: Theme.of(context).primaryColor,
       body: Stack(
         children: [
@@ -103,24 +98,3 @@ class WorkerScreen extends StatelessWidget {
 //print(MediaQuery.of(context).padding.bottom);
 //print(MediaQuery.of(context).size.height);
 //print(AppBar().preferredSize.height);
-
-// Expanded(
-// child: ListView.builder(
-// itemCount: Demo_Worker.length,
-// itemBuilder: (ctx, index) => Worker(
-// name: Demo_Worker[index].name,
-// rating: Demo_Worker[index].rating,
-// image: Demo_Worker[index].image),
-// ),
-// ),
-
-// Container(
-//   child: Container(),
-//   decoration: BoxDecoration(
-//     borderRadius: BorderRadius.only(
-//       topRight: Radius.circular(20),
-//       topLeft: Radius.circular(20),
-//     ),
-//     color: Colors.white,
-//   ),
-// ),
