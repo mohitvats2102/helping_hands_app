@@ -47,6 +47,18 @@ class _LoginScreenState extends State<LoginScreen> {
         Navigator.of(context)
             .pushReplacementNamed(CategoryScreen.categoryScreen);
       } else {
+        if (this.mounted) {
+          setState(() {
+            _isStartRegister = true;
+          });
+        }
+        await _auth.createUserWithEmailAndPassword(
+            email: email, password: password);
+        if (this.mounted) {
+          setState(() {
+            _isStartRegister = false;
+          });
+        }
         var data = await Navigator.of(context)
             .pushNamed(UserDetailScreen.userDetailScreen, arguments: {
           'username': username,

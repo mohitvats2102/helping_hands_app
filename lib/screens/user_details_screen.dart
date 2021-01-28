@@ -33,8 +33,8 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
         _isRegisterStart = true;
       });
       try {
-        await _auth.createUserWithEmailAndPassword(
-            email: routeArgs['email'], password: routeArgs['password']);
+        // await _auth.createUserWithEmailAndPassword(
+        //     email: routeArgs['email'], password: routeArgs['password']);
         await _firestore.collection('users').doc(routeArgs['email']).set({
           'name': _userName,
           'address': _address,
