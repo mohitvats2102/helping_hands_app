@@ -70,7 +70,8 @@ class CategoryScreen extends StatelessWidget {
                 const EdgeInsets.only(left: 12, top: 10, right: 12, bottom: 4),
             child: GridView(
               // scrollDirection: Axis.horizontal,
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(
+                  parent: AlwaysScrollableScrollPhysics()),
               children: Demo_Example.map(
                 (catData) => CategoryItem(
                   catData.id,

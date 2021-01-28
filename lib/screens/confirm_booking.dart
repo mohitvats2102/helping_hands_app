@@ -153,6 +153,8 @@ class _BookingScreenState extends State<BookingScreen> {
               child: Form(
                 key: _formKey,
                 child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(
+                      parent: AlwaysScrollableScrollPhysics()),
                   child: Column(
                     children: [
                       TextFormField(

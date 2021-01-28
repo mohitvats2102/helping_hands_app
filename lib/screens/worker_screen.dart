@@ -5,8 +5,14 @@ import 'package:helping_hands_app/demo_workers.dart';
 
 import '../widget/worker_item.dart';
 
-class WorkerScreen extends StatelessWidget {
+class WorkerScreen extends StatefulWidget {
   static const String workerscreen = '/workerscreen';
+
+  @override
+  _WorkerScreenState createState() => _WorkerScreenState();
+}
+
+class _WorkerScreenState extends State<WorkerScreen> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override
@@ -82,30 +88,42 @@ class WorkerScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(
                     bottom: 5, right: 5, top: 15, left: 5),
                 child: title == 'Electrician'
-                    ? StreamBuilder<QuerySnapshot>(
-                        stream: _firestore
-                            .collection('categories/electrician/workers')
-                            .snapshots(),
-                        builder: (context, asyncSnapshot) {
-                          if (!asyncSnapshot.hasData) {
-                            return Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
-                          return ListView.builder(
-                              physics: BouncingScrollPhysics(),
+                    ? RefreshIndicator(
+                        color: kdarkBlue,
+                        onRefresh: () async {
+                          // await _firestore
+                          //     .collection('categories/electrician/workers')
+                          //     .get();
+                          setState(() {});
+                        },
+                        child: FutureBuilder<QuerySnapshot>(
+                          future: _firestore
+                              .collection('categories/electrician/workers')
+                              .get(),
+                          builder: (context, asyncSnapshot) {
+                            if (asyncSnapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+                            return ListView.builder(
+                              physics: const BouncingScrollPhysics(
+                                  parent: AlwaysScrollableScrollPhysics()),
                               itemCount: asyncSnapshot.data.docs.length,
                               itemBuilder: (ctx, index) {
                                 final _workerData =
                                     asyncSnapshot.data.docs[index];
-
                                 return WorkerItem(
-                                  name: _workerData['name'],
-                                  rating: 4.5, //_workerData['rating'],
+                                  name: _workerData.data()['name'],
+                                  rating: double.parse(
+                                      _workerData.data()['rating']),
                                   image: 'assets/images/contactimage.png',
                                 );
-                              });
-                        },
+                              },
+                            );
+                          },
+                        ),
                       )
                     : ListView.builder(
                         physics: BouncingScrollPhysics(),

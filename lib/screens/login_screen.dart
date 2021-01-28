@@ -54,13 +54,16 @@ class _LoginScreenState extends State<LoginScreen> {
               _isStartRegister = true;
             });
           }
+
           await _auth.createUserWithEmailAndPassword(
               email: email, password: password);
+
           if (this.mounted) {
             setState(() {
               _isStartRegister = false;
             });
           }
+
           Navigator.of(context)
               .pushReplacementNamed(CategoryScreen.categoryScreen);
         }

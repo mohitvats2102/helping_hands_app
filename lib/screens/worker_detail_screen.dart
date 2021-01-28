@@ -80,7 +80,8 @@ class WorkerDetailScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(
                     bottom: 5, top: 16, left: 10, right: 10),
                 child: SingleChildScrollView(
-                  physics: BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(
+                      parent: AlwaysScrollableScrollPhysics()),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
