@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:helping_hands_app/constant.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 import '../screens/category_screen.dart';
@@ -47,25 +48,45 @@ class _LoginScreenState extends State<LoginScreen> {
             .pushReplacementNamed(CategoryScreen.categoryScreen);
       } else {
         var data = await Navigator.of(context)
-            .pushNamed(UserDetailScreen.userDetailScreen, arguments: username);
+            .pushNamed(UserDetailScreen.userDetailScreen, arguments: {
+          'username': username,
+          'email': email,
+          'password': password,
+        });
         if (data == true) {
-          if (this.mounted) {
-            setState(() {
-              _isStartRegister = true;
-            });
-          }
-
-          await _auth.createUserWithEmailAndPassword(
-              email: email, password: password);
-
-          if (this.mounted) {
-            setState(() {
-              _isStartRegister = false;
-            });
-          }
-
           Navigator.of(context)
               .pushReplacementNamed(CategoryScreen.categoryScreen);
+        } else if (data != null) {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                child: AlertDialog(
+                  title: Text(
+                    data,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  actions: [
+                    FlatButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text(
+                        'Ok',
+                        style: TextStyle(
+                          color: kdarkBlue,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
         }
       }
     } on PlatformException catch (err) {
@@ -74,7 +95,6 @@ class _LoginScreenState extends State<LoginScreen> {
           _isStartRegister = false;
         });
       }
-
       String msg = 'Something went wrong please try again later';
       if (err.message != null) {
         msg = err.message;

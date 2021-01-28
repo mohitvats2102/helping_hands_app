@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:helping_hands_app/constant.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
-import '../helpers/shared_pref_helper.dart';
 import '../widget/base_ui.dart';
 
 class UserDetailScreen extends StatefulWidget {
@@ -13,7 +15,9 @@ class UserDetailScreen extends StatefulWidget {
 }
 
 class _UserDetailScreenState extends State<UserDetailScreen> {
-  SharedPrefHelper _prefs = SharedPrefHelper();
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  Map<String, String> routeArgs;
   bool _isInit = true;
   final _formKey = GlobalKey<FormState>();
   String _userName = '';
@@ -28,13 +32,24 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
       setState(() {
         _isRegisterStart = true;
       });
-      await _prefs.setUserName(_userName);
-      await _prefs.setAddress(_address);
-      await _prefs.setContact(_contact);
-      setState(() {
-        _isRegisterStart = false;
-      });
-      Navigator.of(context).pop(true);
+      try {
+        await _auth.createUserWithEmailAndPassword(
+            email: routeArgs['email'], password: routeArgs['password']);
+        await _firestore.collection('users').doc(routeArgs['email']).set({
+          'name': _userName,
+          'address': _address,
+          'contact': _contact,
+        });
+        setState(() {
+          _isRegisterStart = false;
+        });
+        Navigator.of(context).pop(true);
+      } catch (e) {
+        setState(() {
+          _isRegisterStart = false;
+        });
+        Navigator.of(context).pop(e.message);
+      }
     } else {
       return;
     }
@@ -44,8 +59,9 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (_isInit) {
-      String routeArgs = ModalRoute.of(context).settings.arguments as String;
-      _userName = routeArgs;
+      routeArgs =
+          ModalRoute.of(context).settings.arguments as Map<String, String>;
+      _userName = routeArgs['username'];
     }
     _isInit = false;
   }
@@ -98,7 +114,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                       ),
                       SizedBox(height: 30),
                       TextFormField(
-                        maxLines: 3,
+                        maxLines: 4,
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.home_filled, color: kdarkBlue),
                           border: OutlineInputBorder(),

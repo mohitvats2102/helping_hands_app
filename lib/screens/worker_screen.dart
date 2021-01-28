@@ -101,26 +101,32 @@ class _WorkerScreenState extends State<WorkerScreen> {
                               .collection('categories/electrician/workers')
                               .get(),
                           builder: (context, asyncSnapshot) {
-                            if (asyncSnapshot.connectionState ==
-                                ConnectionState.waiting) {
+                            if (asyncSnapshot.hasError) {
                               return Center(
-                                child: CircularProgressIndicator(),
+                                child: Text(
+                                    'Something went wrong!!\nPlease Try again later'),
                               );
                             }
-                            return ListView.builder(
-                              physics: const BouncingScrollPhysics(
-                                  parent: AlwaysScrollableScrollPhysics()),
-                              itemCount: asyncSnapshot.data.docs.length,
-                              itemBuilder: (ctx, index) {
-                                final _workerData =
-                                    asyncSnapshot.data.docs[index];
-                                return WorkerItem(
-                                  name: _workerData.data()['name'],
-                                  rating: double.parse(
-                                      _workerData.data()['rating']),
-                                  image: 'assets/images/contactimage.png',
-                                );
-                              },
+                            if (asyncSnapshot.connectionState ==
+                                ConnectionState.done) {
+                              return ListView.builder(
+                                physics: const BouncingScrollPhysics(
+                                    parent: AlwaysScrollableScrollPhysics()),
+                                itemCount: asyncSnapshot.data.docs.length,
+                                itemBuilder: (ctx, index) {
+                                  final _workerDoc =
+                                      asyncSnapshot.data.docs[index];
+                                  final _workerData = _workerDoc.data();
+                                  return WorkerItem(
+                                    name: _workerData['name'],
+                                    rating: double.parse(_workerData['rating']),
+                                    image: 'assets/images/contactimage.png',
+                                  );
+                                },
+                              );
+                            }
+                            return Center(
+                              child: CircularProgressIndicator(),
                             );
                           },
                         ),

@@ -1,9 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:helping_hands_app/constant.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
-import '../helpers/shared_pref_helper.dart';
 import '../widget/base_ui.dart';
 
 class BookingScreen extends StatefulWidget {
@@ -14,8 +15,9 @@ class BookingScreen extends StatefulWidget {
 }
 
 class _BookingScreenState extends State<BookingScreen> {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
-  SharedPrefHelper _pref = SharedPrefHelper();
 
   TextEditingController _nameController = TextEditingController();
   TextEditingController _addressController = TextEditingController();
@@ -40,13 +42,18 @@ class _BookingScreenState extends State<BookingScreen> {
   }
 
   void getUserName() async {
-    _name = await _pref.getUserName();
-    _address = await _pref.getAddress();
-    _phoneNumber = await _pref.getContact();
+    final String userEmail = _auth.currentUser.email;
+    final DocumentSnapshot _userData =
+        await _firestore.collection('users').doc(userEmail).get();
+    if (_userData != null) {
+      _name = _userData.data()['name'];
+      _address = _userData.data()['address'];
+      _phoneNumber = _userData.data()['contact'];
 
-    _nameController.text = _name;
-    _addressController.text = _address;
-    _contactController.text = _phoneNumber;
+      _nameController.text = _name;
+      _addressController.text = _address;
+      _contactController.text = _phoneNumber;
+    }
   }
 
   @override
@@ -177,7 +184,7 @@ class _BookingScreenState extends State<BookingScreen> {
                       SizedBox(height: 20),
                       TextFormField(
                         controller: _addressController,
-                        maxLines: 2,
+                        maxLines: 4,
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.home_filled, color: kdarkBlue),
                           border: OutlineInputBorder(),

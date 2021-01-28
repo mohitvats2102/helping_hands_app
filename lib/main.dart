@@ -67,7 +67,6 @@ class MyApp extends StatelessWidget {
               curve: Curves.linear,
               // childCurrent: this,  childCurrent is used when we use any 'joined' page transition
               type: PageTransitionType.rightToLeftWithFade,
-
               settings:
                   settings, //setting argument is used when we are passing Data through NamedRoutes just like in WorkerScreen()
             );
