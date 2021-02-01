@@ -7,20 +7,37 @@ class WorkerItem extends StatelessWidget {
   final String name;
   final double rating;
   final String image;
-  WorkerItem({this.name, this.rating, this.image});
+  final String charges;
+  final String address;
+  final String contact;
+  final String shopName;
+  WorkerItem({
+    this.name,
+    this.rating,
+    this.image,
+    this.charges,
+    this.shopName,
+    this.address,
+    this.contact,
+  });
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () async {
-        var val = await Navigator.of(context).pushNamed(
+      onTap: () {
+        // var val = await
+        Navigator.of(context).pushNamed(
           WorkerDetailScreen.worker_route,
           arguments: {
             'name': name,
             'rating': rating,
             'image': image,
+            'charges': charges,
+            'address': address,
+            'contact': contact,
+            'shopname': shopName
           },
         );
-        if (val != null) Navigator.of(context).pop();
+        //if (val != null) Navigator.of(context).pop();
       },
       child: Card(
         elevation: 5,
@@ -28,7 +45,8 @@ class WorkerItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(15),
         ),
         child: ListTile(
-          subtitle: Text('8949499892'),
+          subtitle: Text('₹ : $charges',
+              style: TextStyle(fontWeight: FontWeight.w600)),
           leading: Hero(
             tag: '$name',
             child: CircleAvatar(

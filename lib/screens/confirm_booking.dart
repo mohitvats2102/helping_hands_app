@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:helping_hands_app/constant.dart';
+import 'package:helping_hands_app/screens/category_screen.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
@@ -23,7 +24,7 @@ class _BookingScreenState extends State<BookingScreen> {
   TextEditingController _addressController = TextEditingController();
   TextEditingController _contactController = TextEditingController();
 
-  bool _isBookingStart = false;
+  bool _showProgressIndicator = false;
 
   DateTime _pickedDate;
   TimeOfDay _pickedTime;
@@ -34,25 +35,12 @@ class _BookingScreenState extends State<BookingScreen> {
   @override
   void initState() {
     super.initState();
+    print('in init');
+    _showProgressIndicator = true;
     if (this.mounted) {
       setState(() {
-        getUserName();
+        getUserData();
       });
-    }
-  }
-
-  void getUserName() async {
-    final String userEmail = _auth.currentUser.email;
-    final DocumentSnapshot _userData =
-        await _firestore.collection('users').doc(userEmail).get();
-    if (_userData != null) {
-      _name = _userData.data()['name'];
-      _address = _userData.data()['address'];
-      _phoneNumber = _userData.data()['contact'];
-
-      _nameController.text = _name;
-      _addressController.text = _address;
-      _contactController.text = _phoneNumber;
     }
   }
 
@@ -64,67 +52,109 @@ class _BookingScreenState extends State<BookingScreen> {
     _nameController.dispose();
   }
 
-  void _trySavingForm() async {
-    bool _isValid = _formKey.currentState.validate();
-    if (_isValid) {
-      _formKey.currentState.save();
-    } else {
-      return;
+  void getUserData() async {
+    final String userUID = _auth.currentUser.uid;
+    // final QuerySnapshot _collectionSnap =
+    //     await _firestore.collection('users').get();
+    // print('USer Email : $userEmail');
+    // var val = _collectionSnap.docs.contains(userEmail);
+    // print('Value of val : $val');
+    // if (val) {
+    //   print('in val if');
+    final DocumentSnapshot _docSnap =
+        await _firestore.collection('users').doc(userUID).get();
+    print('_docSnap : $_docSnap');
+    print('Data in User Doc : ${_docSnap.data()}');
+    setState(() {
+      _showProgressIndicator = false;
+    });
+    if (_docSnap.data() != null) {
+      _name = _docSnap.data()['name'];
+      _address = _docSnap.data()['address'];
+      _phoneNumber = _docSnap.data()['contact'];
+
+      _nameController.text = _name;
+      _addressController.text = _address;
+      _contactController.text = _phoneNumber;
     }
+    // }
+  }
+
+  void _trySavingForm() async {
     FocusScope.of(context).unfocus();
-    if (_pickedDate == null || _pickedTime == null) {
-      String _msg;
-      if (_pickedDate == null && _pickedTime == null)
-        _msg = 'Please Choose Date and Time';
-      else if (_pickedTime == null)
-        _msg = 'Please Choose a Time';
-      else if (_pickedDate == null) _msg = 'Please Choose a Date';
-      showDialog(
-        context: context,
-        builder: (ctx) {
-          return AlertDialog(
-            title: Text(_msg),
-            actions: [
-              FlatButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text('Ok'),
-              )
-            ],
-          );
-        },
-      );
-    } else {
-      setState(() {
-        _isBookingStart = true;
-      });
-      await _tryConfirmBooking();
-      setState(() {
-        _isBookingStart = false;
-      });
-      await showDialog(
-        context: context,
-        builder: (ctx) {
-          return GestureDetector(
-            onTap: () {},
-            behavior: HitTestBehavior.opaque,
-            child: SimpleDialog(
-              titlePadding: const EdgeInsets.all(20),
-              title: Text('Your Booking is Confirmed'),
-              children: [
-                SimpleDialogOption(
-                  child: Text('Ok'),
+
+    bool _isValid = _formKey.currentState.validate();
+
+    if (_isValid) {
+      if (_pickedDate == null || _pickedTime == null) {
+        String _msg;
+        if (_pickedDate == null && _pickedTime == null)
+          _msg = 'Please Choose Date and Time';
+        else if (_pickedTime == null)
+          _msg = 'Please Choose a Time';
+        else if (_pickedDate == null) _msg = 'Please Choose a Date';
+        showDialog(
+          context: context,
+          builder: (ctx) {
+            return AlertDialog(
+              title: Text(_msg),
+              actions: [
+                FlatButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                ),
+                  child: Text('Ok'),
+                )
               ],
-            ),
-          );
-        },
-      );
-      Navigator.of(context).pop(true);
+            );
+          },
+        );
+      } else {
+        _formKey.currentState.save();
+        final String userUID = _auth.currentUser.uid;
+        setState(() {
+          _showProgressIndicator = true;
+        });
+        final DocumentSnapshot _docSnap =
+            await _firestore.collection('users').doc(userUID).get();
+        if (_docSnap.data() == null) {
+          print('in set data');
+          await _firestore.collection('users').doc(userUID).set({
+            'name': _name,
+            'address': _address,
+            'contact': _phoneNumber,
+          });
+        }
+        await _tryConfirmBooking();
+        setState(() {
+          _showProgressIndicator = false;
+        });
+        await showDialog(
+          context: context,
+          builder: (ctx) {
+            return GestureDetector(
+              onTap: () {},
+              behavior: HitTestBehavior.opaque,
+              child: SimpleDialog(
+                titlePadding: const EdgeInsets.all(20),
+                title: Text('Your Booking is Confirmed'),
+                children: [
+                  SimpleDialogOption(
+                    child: Text('OK'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+        Navigator.of(context).pushNamedAndRemoveUntil(
+            CategoryScreen.categoryScreen, (route) => false);
+      }
+    } else {
+      return;
     }
   }
 
@@ -141,13 +171,15 @@ class _BookingScreenState extends State<BookingScreen> {
       ),
       backgroundColor: Theme.of(context).primaryColor,
       body: ModalProgressHUD(
-        inAsyncCall: _isBookingStart,
+        inAsyncCall: _showProgressIndicator,
         child: SafeArea(
           child: BaseUI(
             text1: 'Confirm Your',
             text2: 'Booking',
-            fontsize: 40,
-            fontWeight: FontWeight.bold,
+            fontsize1: 40,
+            fontsize2: 40,
+            fontWeight1: FontWeight.bold,
+            fontWeight2: FontWeight.w500,
             padding: const EdgeInsets.only(left: 18),
             height: 30,
             radius: const BorderRadius.only(

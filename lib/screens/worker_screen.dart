@@ -116,28 +116,41 @@ class _WorkerScreenState extends State<WorkerScreen> {
                                 itemBuilder: (ctx, index) {
                                   final _workerDoc =
                                       asyncSnapshot.data.docs[index];
+                                  // print(_workerDoc.id);
                                   final _workerData = _workerDoc.data();
                                   return WorkerItem(
                                     name: _workerData['name'],
                                     rating: double.parse(_workerData['rating']),
                                     image: 'assets/images/contactimage.png',
+                                    charges: _workerData['charges'],
+                                    shopName: _workerData['shopname'],
+                                    contact: _workerData['contact'],
+                                    address: _workerData['address'],
                                   );
                                 },
                               );
                             }
                             return Center(
-                              child: CircularProgressIndicator(),
+                              child: CircularProgressIndicator(
+                                backgroundColor: kdarkBlue,
+                              ),
                             );
                           },
                         ),
                       )
                     : ListView.builder(
-                        physics: BouncingScrollPhysics(),
+                        physics: BouncingScrollPhysics(
+                            parent: AlwaysScrollableScrollPhysics()),
                         itemCount: Demo_Worker.length,
                         itemBuilder: (ctx, index) => WorkerItem(
-                            name: Demo_Worker[index].name,
-                            rating: Demo_Worker[index].rating,
-                            image: Demo_Worker[index].image),
+                          name: Demo_Worker[index].name,
+                          rating: Demo_Worker[index].rating,
+                          image: Demo_Worker[index].image,
+                          charges: Demo_Worker[index].charges,
+                          address: Demo_Worker[index].address,
+                          contact: Demo_Worker[index].contact,
+                          shopName: Demo_Worker[index].shopName,
+                        ),
                       ),
               ),
             ),

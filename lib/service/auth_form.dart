@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:helping_hands_app/constant.dart';
 
 class AuthForm extends StatefulWidget {
@@ -10,7 +11,11 @@ class AuthForm extends StatefulWidget {
     BuildContext ctx,
   }) tryLoginUser;
 
-  AuthForm(this.tryLoginUser);
+  final Future<void> Function() googleSignIn;
+
+  //final BuildContext ctx;
+
+  AuthForm({this.tryLoginUser, this.googleSignIn});
 
   @override
   _AuthFormState createState() => _AuthFormState();
@@ -138,14 +143,14 @@ class _AuthFormState extends State<AuthForm> {
                   borderRadius: BorderRadius.circular(5),
                 ),
                 child: Text(
-                  _islogin ? 'Login' : 'Register',
+                  _islogin ? 'Sign in using Phone' : 'Register',
                   style: TextStyle(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
                 onPressed: onSave,
                 color: kdarkBlue,
               ),
-              SizedBox(height: _islogin ? 50 : 20),
+              SizedBox(height: 50),
               Text(
                 _islogin
                     ? 'Don\'t have any account.'
@@ -169,11 +174,16 @@ class _AuthFormState extends State<AuthForm> {
                   ),
                 ),
               ),
-              CircleAvatar(
-                radius: 25,
-                backgroundColor: Colors.white,
-                backgroundImage: AssetImage('assets/images/logo.jpg'),
-              )
+              SizedBox(height: 40),
+              if (_islogin)
+                Text('Or',
+                    style: TextStyle(
+                        color: kdarkBlue, fontWeight: FontWeight.w600)),
+              if (_islogin)
+                SignInButton(
+                  Buttons.Google,
+                  onPressed: widget.googleSignIn,
+                ),
             ],
           ),
         ),

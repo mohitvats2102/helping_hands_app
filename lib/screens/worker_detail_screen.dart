@@ -19,6 +19,10 @@ class WorkerDetailScreen extends StatelessWidget {
     final workerName = routeArgs['name'];
     final workerRating = routeArgs['rating'];
     final String workerImage = routeArgs['image'];
+    final String charges = routeArgs['charges'];
+    final String address = routeArgs['address'];
+    final String contact = routeArgs['contact'];
+    final String shopName = routeArgs['shopname'];
 
     return Scaffold(
       body: Stack(
@@ -79,56 +83,58 @@ class WorkerDetailScreen extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(
                     bottom: 5, top: 16, left: 10, right: 10),
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(
-                      parent: AlwaysScrollableScrollPhysics()),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      WorkerDetailCard(
-                        workerName: workerName,
-                        rating: workerRating,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    WorkerDetailCard(
+                      workerName: workerName,
+                      rating: workerRating,
+                      charges: charges,
+                      address: address,
+                      contact: contact,
+                      shopName: shopName,
+                    ),
+                    SizedBox(height: 40),
+                    RaisedButton.icon(
+                      textColor: Colors.white,
+                      padding: const EdgeInsets.all(10),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
                       ),
-                      SizedBox(height: 30),
-                      RaisedButton.icon(
-                        textColor: Colors.white,
-                        padding: const EdgeInsets.all(10),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        color: kdarkBlue,
-                        onPressed: () async {
-                          var val = await Navigator.of(context).pushNamed(
-                            BookingScreen.bookingPageRoute,
-                            arguments: {
-                              'image': workerImage,
-                            },
-                          );
-                          if (val != null) Navigator.of(context).pop(val);
-                        },
-                        icon: Icon(Icons.book_outlined, color: Colors.white),
-                        label: Text(
-                          'Book Now',
-                          style: TextStyle(fontSize: 19),
-                        ),
+                      color: kdarkBlue,
+                      onPressed: () {
+                        // var val = await
+                        Navigator.of(context).pushNamed(
+                          BookingScreen.bookingPageRoute,
+                          arguments: {
+                            'image': workerImage,
+                          },
+                        );
+                        //if (val != null) Navigator.of(context).pop(val);
+                      },
+                      icon: Icon(Icons.book_outlined, color: Colors.white),
+                      label: Text(
+                        'Book Now / Schedule',
+                        style: TextStyle(fontSize: 19),
                       ),
-                      SizedBox(height: 20),
-                      RaisedButton.icon(
-                        textColor: Colors.white,
-                        padding: const EdgeInsets.all(10),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        color: kdarkBlue,
-                        onPressed: () {},
-                        icon: Icon(Icons.phone, color: Colors.white),
-                        label: Text(
-                          'Call Now',
-                          style: TextStyle(fontSize: 19),
-                        ),
+                    ),
+                    SizedBox(height: 20),
+                    RaisedButton.icon(
+                      textColor: Colors.white,
+                      padding: const EdgeInsets.all(10),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
                       ),
-                    ],
-                  ),
+                      color: kdarkBlue,
+                      onPressed: () {},
+                      icon: Icon(Icons.phone, color: Colors.white),
+                      label: Text(
+                        'Call Now',
+                        style: TextStyle(fontSize: 19),
+                      ),
+                    ),
+                    SizedBox(height: 20)
+                  ],
                 ),
               ),
             ),
@@ -142,59 +148,90 @@ class WorkerDetailScreen extends StatelessWidget {
 class WorkerDetailCard extends StatelessWidget {
   final String workerName;
   final double rating;
-  WorkerDetailCard({this.workerName, this.rating});
+  final String charges;
+  final String address;
+  final String contact;
+  final String shopName;
+  WorkerDetailCard({
+    this.workerName,
+    this.rating,
+    this.charges,
+    this.shopName,
+    this.contact,
+    this.address,
+  });
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
-      elevation: 5,
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          children: [
-            ListTile(
-              leading: Icon(Icons.person, color: kdarkBlue),
-              title: Text(
-                workerName,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-              ),
-            ),
-            Divider(),
-            ListTile(
-              leading: Icon(Icons.location_on, color: kdarkBlue),
-              title: Text(
-                'Murli Colony, Ward No. 18, Shiv Hari Sadan , Near Jhulelal Temple , Sector 24 ,Khairthal  ',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
+    return Expanded(
+      child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+        elevation: 5,
+        child: Padding(
+          padding: const EdgeInsets.all(0.0),
+          child: SingleChildScrollView(
+            physics:
+                BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+            child: Column(
+              children: [
+                ListTile(
+                  leading: Icon(Icons.person, color: kdarkBlue),
+                  title: Text(
+                    workerName,
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  ),
                 ),
-              ),
+                Divider(),
+                ListTile(
+                  leading: Icon(Icons.location_on, color: kdarkBlue),
+                  title: Text(
+                    address,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+                Divider(),
+                ListTile(
+                  leading: Icon(Icons.phone, color: kdarkBlue),
+                  title: Text(
+                    contact,
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  ),
+                ),
+                Divider(),
+                ListTile(
+                  leading: Icon(Icons.star, color: kdarkBlue),
+                  title: Text(
+                    rating.toString(),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  ),
+                ),
+                Divider(),
+                ListTile(
+                  leading: Icon(Icons.shop_outlined, color: kdarkBlue),
+                  title: Text(
+                    shopName,
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  ),
+                ),
+                Divider(),
+                ListTile(
+                  leading: Text(
+                    ' ₹',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        color: kdarkBlue),
+                  ), //Icon(Icons.message, color: kdarkBlue),
+                  title: Text(
+                    charges,
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  ),
+                ),
+              ],
             ),
-            Divider(),
-            ListTile(
-              leading: Icon(Icons.phone, color: kdarkBlue),
-              title: Text(
-                '8949499892',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-              ),
-            ),
-            Divider(),
-            ListTile(
-              leading: Icon(Icons.star, color: kdarkBlue),
-              title: Text(
-                rating.toString(),
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-              ),
-            ),
-            Divider(),
-            ListTile(
-              leading: Icon(Icons.shop_outlined, color: kdarkBlue),
-              title: Text(
-                'Gada Electronics',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );

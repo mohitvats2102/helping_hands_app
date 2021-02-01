@@ -7,7 +7,7 @@ import 'package:page_transition/page_transition.dart';
 
 import './screens/category_screen.dart';
 import './screens/confirm_booking.dart';
-import './screens/user_details_screen.dart';
+import './screens/user_profile_screen.dart';
 import './screens/worker_detail_screen.dart';
 
 void main() async {
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Montserrat',
       ),
       title: 'Helping Hands',
-      home: StreamBuilder(
+      home: StreamBuilder<User>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (ctx, userSnapShot) {
           if (userSnapShot.hasData) {
@@ -89,9 +89,9 @@ class MyApp extends StatelessWidget {
                   settings, //setting argument is used when we are passing Data through NamedRoutes just like in WorkerScreen()
             );
             break;
-          case UserDetailScreen.userDetailScreen:
+          case UserProfile.userProfileScreen:
             return PageTransition(
-              child: UserDetailScreen(),
+              child: UserProfile(),
               curve: Curves.linear,
               type: PageTransitionType.rightToLeftWithFade,
               settings:
