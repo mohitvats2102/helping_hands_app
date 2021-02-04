@@ -6,7 +6,7 @@ import '../screens/worker_detail_screen.dart';
 class WorkerItem extends StatelessWidget {
   final String name;
   final double rating;
-  final String image;
+  final String imageUrl;
   final String charges;
   final String address;
   final String contact;
@@ -14,7 +14,7 @@ class WorkerItem extends StatelessWidget {
   WorkerItem({
     this.name,
     this.rating,
-    this.image,
+    this.imageUrl,
     this.charges,
     this.shopName,
     this.address,
@@ -30,7 +30,7 @@ class WorkerItem extends StatelessWidget {
           arguments: {
             'name': name,
             'rating': rating,
-            'image': image,
+            'imageUrl': imageUrl,
             'charges': charges,
             'address': address,
             'contact': contact,
@@ -50,7 +50,7 @@ class WorkerItem extends StatelessWidget {
           leading: Hero(
             tag: '$name',
             child: CircleAvatar(
-              backgroundImage: AssetImage(image),
+              backgroundImage: NetworkImage(imageUrl),
             ),
           ),
           title: Text(

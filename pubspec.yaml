@@ -38,6 +38,7 @@ dependencies:
   font_awesome_flutter: ^8.11.0
   google_sign_in: ^4.5.9
   flutter_signin_button: ^1.1.0
+  pinput: ^1.0.0
 
 
 dev_dependencies:

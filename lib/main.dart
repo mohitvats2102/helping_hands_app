@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:helping_hands_app/screens/login_screen.dart';
+import 'package:helping_hands_app/screens/phone_verification.dart';
 import 'package:helping_hands_app/screens/worker_screen.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -12,6 +14,7 @@ import './screens/worker_detail_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await Firebase.initializeApp();
   runApp(MyApp());
 }
@@ -92,6 +95,15 @@ class MyApp extends StatelessWidget {
           case UserProfile.userProfileScreen:
             return PageTransition(
               child: UserProfile(),
+              curve: Curves.linear,
+              type: PageTransitionType.rightToLeftWithFade,
+              settings:
+                  settings, //setting argument is used when we are passing Data through NamedRoutes just like in WorkerScreen()
+            );
+            break;
+          case PhoneVerification.phoneVerificationScreen:
+            return PageTransition(
+              child: PhoneVerification(),
               curve: Curves.linear,
               type: PageTransitionType.rightToLeftWithFade,
               settings:

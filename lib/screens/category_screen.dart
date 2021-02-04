@@ -1,8 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:helping_hands_app/demo_examples.dart';
+import 'package:helping_hands_app/constant.dart';
 import 'package:helping_hands_app/screens/login_screen.dart';
 import 'package:helping_hands_app/widget/category_item.dart';
 
@@ -12,7 +13,7 @@ import '../widget/main_drawer.dart';
 class CategoryScreen extends StatelessWidget {
   static const String categoryScreen = '/categoryScreen';
   final FirebaseAuth _auth = FirebaseAuth.instance;
-
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   String _userImageUrl = '';
   String _userName = '';
 
@@ -88,22 +89,39 @@ class CategoryScreen extends StatelessWidget {
           child: Padding(
             padding:
                 const EdgeInsets.only(left: 12, top: 10, right: 12, bottom: 4),
-            child: GridView(
-              physics: const BouncingScrollPhysics(
-                  parent: AlwaysScrollableScrollPhysics()),
-              children: Demo_Example.map(
-                (catData) => CategoryItem(
-                  catData.id,
-                  catData.title,
-                  catData.assetImage,
-                ),
-              ).toList(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 1.1,
-                crossAxisSpacing: 20,
-                mainAxisSpacing: 10,
-              ),
+            child: FutureBuilder<QuerySnapshot>(
+              future: _firestore.collection('categories').get(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  List<QueryDocumentSnapshot> _docSnap = snapshot.data.docs;
+                  return GridView.builder(
+                    itemCount: _docSnap.length,
+                    physics: const BouncingScrollPhysics(
+                        parent: AlwaysScrollableScrollPhysics()),
+                    itemBuilder: (context, index) {
+                      return CategoryItem(
+                        _docSnap[index].data()['name'],
+                        _docSnap[index].data()['image'],
+                      );
+                    },
+                    // Demo_Example.map(
+                    //    (catData) => CategoryItem(
+                    //      catData.title,
+                    //      catData.assetImage,
+                    //    ),
+                    //  ).toList(),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 1.1,
+                      crossAxisSpacing: 20,
+                      mainAxisSpacing: 10,
+                    ),
+                  );
+                }
+                return Center(
+                  child: CircularProgressIndicator(backgroundColor: kdarkBlue),
+                );
+              },
             ),
           ),
         ),

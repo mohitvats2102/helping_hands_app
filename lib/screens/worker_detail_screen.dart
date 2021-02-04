@@ -18,7 +18,7 @@ class WorkerDetailScreen extends StatelessWidget {
 
     final workerName = routeArgs['name'];
     final workerRating = routeArgs['rating'];
-    final String workerImage = routeArgs['image'];
+    final String workerImageUrl = routeArgs['imageUrl'];
     final String charges = routeArgs['charges'];
     final String address = routeArgs['address'];
     final String contact = routeArgs['contact'];
@@ -34,9 +34,9 @@ class WorkerDetailScreen extends StatelessWidget {
               topLeft: Radius.circular(10),
             ),
             child: Hero(
-              tag: '$workerName',
-              child: Image.asset(
-                workerImage,
+              tag: workerName,
+              child: Image.network(
+                workerImageUrl,
                 height: _mainScreenHeight * 0.35,
                 width: _mediaQuery.size.width,
                 fit: BoxFit.cover,
@@ -107,7 +107,7 @@ class WorkerDetailScreen extends StatelessWidget {
                         Navigator.of(context).pushNamed(
                           BookingScreen.bookingPageRoute,
                           arguments: {
-                            'image': workerImage,
+                            'image': workerImageUrl,
                           },
                         );
                         //if (val != null) Navigator.of(context).pop(val);

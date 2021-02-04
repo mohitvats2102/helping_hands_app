@@ -41,10 +41,11 @@ class MainDrawer extends StatelessWidget {
                           height: 58,
                           width: 56,
                           fit: BoxFit.fill,
-                          placeholder: AssetImage('assets/images/logo.jpg'),
+                          placeholder:
+                              AssetImage('assets/images/user_avatar.PNG'),
                           image: NetworkImage(imageUrl),
                         )
-                      : AssetImage('assets/images/ee.PNG'),
+                      : AssetImage('assets/images/user_avatar.PNG'),
                 ),
 
                 // CircleAvatar(
@@ -60,7 +61,7 @@ class MainDrawer extends StatelessWidget {
                 title: Text(
                   'Welcome!',
                   style: TextStyle(
-                    fontSize: 33,
+                    fontSize: 30,
                     color: Colors.white,
                     fontWeight: FontWeight.w600,
                     letterSpacing: 1,
@@ -69,10 +70,11 @@ class MainDrawer extends StatelessWidget {
                 subtitle: Text(
                   userName,
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 18,
                     color: Colors.white,
                     letterSpacing: 1.5,
                   ),
+                  maxLines: 1,
                 ),
               ),
             ),

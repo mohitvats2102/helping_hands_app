@@ -8,6 +8,7 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 import '../screens/category_screen.dart';
 import '../widget/base_ui.dart';
+import 'phone_verification.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String loginScreen = '/loginscreen';
@@ -150,7 +151,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       const EdgeInsets.symmetric(vertical: 8, horizontal: 35),
                   textColor: Colors.white,
                   color: kdarkBlue,
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context)
+                        .pushNamed(PhoneVerification.phoneVerificationScreen);
+                  },
                   icon: Icon(
                     Icons.phone,
                     color: Colors.white,

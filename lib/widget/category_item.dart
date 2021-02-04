@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 import '../screens/worker_screen.dart';
 
 class CategoryItem extends StatelessWidget {
-  final String id;
   final String title;
-  final String assetImage;
+  final String imageUrl;
 
-  CategoryItem(this.id, this.title, this.assetImage);
+  CategoryItem(this.title, this.imageUrl);
 
   @override
   Widget build(BuildContext context) {
@@ -15,9 +14,8 @@ class CategoryItem extends StatelessWidget {
       onTap: () => Navigator.of(context).pushNamed(
         WorkerScreen.workerscreen,
         arguments: {
-          'id': id,
           'title': title,
-          'assetImage': assetImage,
+          'imageUrl': imageUrl,
         },
       ),
       splashColor: Theme.of(context).primaryColor,
@@ -33,11 +31,12 @@ class CategoryItem extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               child: Hero(
                 tag: 'animation$title',
-                child: Image.asset(
-                  assetImage,
+                child: FadeInImage(
                   width: double.infinity,
                   height: 250,
                   fit: BoxFit.fill,
+                  image: NetworkImage(imageUrl),
+                  placeholder: AssetImage('assets/images/logo.png'),
                 ),
               ),
             ),
