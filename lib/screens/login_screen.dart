@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:helping_hands_app/constant.dart';
@@ -8,7 +7,6 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 import '../screens/category_screen.dart';
 import '../widget/base_ui.dart';
-import 'phone_verification.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String loginScreen = '/loginscreen';
@@ -55,69 +53,69 @@ class _LoginScreenState extends State<LoginScreen> {
     );
 
     // Once signed in, return the UserCredential
-    return await FirebaseAuth.instance.signInWithCredential(credential);
+    return await _auth.signInWithCredential(credential);
   }
 
-  Future<void> _tryLoginUser(
-      {String email,
-      String password,
-      String username,
-      bool islogin,
-      BuildContext ctx}) async {
-    UserCredential authUser;
-    try {
-      if (this.mounted) {
-        setState(() {
-          _isStartRegister = true;
-        });
-      }
-      if (islogin) {
-        authUser = await _auth.signInWithEmailAndPassword(
-            email: email, password: password);
-        // authUser.user.providerData[1].providerId;
-
-        Navigator.of(context)
-            .pushReplacementNamed(CategoryScreen.categoryScreen);
-      } else {
-        await _auth.createUserWithEmailAndPassword(
-            email: email, password: password);
-
-        Navigator.of(context)
-            .pushReplacementNamed(CategoryScreen.categoryScreen);
-      }
-    } on PlatformException catch (err) {
-      if (this.mounted) {
-        setState(() {
-          _isStartRegister = false;
-        });
-      }
-      String msg = 'Something went wrong please try again later';
-      if (err.message != null) {
-        msg = err.message;
-      }
-      print(err.message);
-      Scaffold.of(ctx).showSnackBar(
-        SnackBar(
-          content: Text(msg),
-          backgroundColor: Colors.red,
-          duration: Duration(seconds: 2),
-        ),
-      );
-    } catch (err) {
-      if (this.mounted) {
-        setState(() {
-          _isStartRegister = false;
-        });
-      }
-      Scaffold.of(ctx).showSnackBar(
-        SnackBar(
-          content: Text(err.message),
-          backgroundColor: Colors.red,
-          duration: Duration(seconds: 2),
-        ),
-      );
-    }
-  }
+  // Future<void> _tryLoginUser(
+  //     {String email,
+  //     String password,
+  //     String username,
+  //     bool islogin,
+  //     BuildContext ctx}) async {
+  //   UserCredential authUser;
+  //   try {
+  //     if (this.mounted) {
+  //       setState(() {
+  //         _isStartRegister = true;
+  //       });
+  //     }
+  //     if (islogin) {
+  //       authUser = await _auth.signInWithEmailAndPassword(
+  //           email: email, password: password);
+  //       // authUser.user.providerData[1].providerId;
+  //
+  //       Navigator.of(context)
+  //           .pushReplacementNamed(CategoryScreen.categoryScreen);
+  //     } else {
+  //       await _auth.createUserWithEmailAndPassword(
+  //           email: email, password: password);
+  //
+  //       Navigator.of(context)
+  //           .pushReplacementNamed(CategoryScreen.categoryScreen);
+  //     }
+  //   } on PlatformException catch (err) {
+  //     if (this.mounted) {
+  //       setState(() {
+  //         _isStartRegister = false;
+  //       });
+  //     }
+  //     String msg = 'Something went wrong please try again later';
+  //     if (err.message != null) {
+  //       msg = err.message;
+  //     }
+  //     print(err.message);
+  //     Scaffold.of(ctx).showSnackBar(
+  //       SnackBar(
+  //         content: Text(msg),
+  //         backgroundColor: Colors.red,
+  //         duration: Duration(seconds: 2),
+  //       ),
+  //     );
+  //   } catch (err) {
+  //     if (this.mounted) {
+  //       setState(() {
+  //         _isStartRegister = false;
+  //       });
+  //     }
+  //     Scaffold.of(ctx).showSnackBar(
+  //       SnackBar(
+  //         content: Text(err.message),
+  //         backgroundColor: Colors.red,
+  //         duration: Duration(seconds: 2),
+  //       ),
+  //     );
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -151,10 +149,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       const EdgeInsets.symmetric(vertical: 8, horizontal: 35),
                   textColor: Colors.white,
                   color: kdarkBlue,
-                  onPressed: () {
-                    Navigator.of(context)
-                        .pushNamed(PhoneVerification.phoneVerificationScreen);
-                  },
+                  onPressed: () {},
                   icon: Icon(
                     Icons.phone,
                     color: Colors.white,
