@@ -93,30 +93,34 @@ class CategoryScreen extends StatelessWidget {
               future: _firestore.collection('categories').get(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
-                  List<QueryDocumentSnapshot> _docSnap = snapshot.data.docs;
-                  return GridView.builder(
-                    itemCount: _docSnap.length,
-                    physics: const BouncingScrollPhysics(
-                        parent: AlwaysScrollableScrollPhysics()),
-                    itemBuilder: (context, index) {
-                      return CategoryItem(
-                        _docSnap[index].data()['name'],
-                        _docSnap[index].data()['image'],
-                      );
-                    },
-                    // Demo_Example.map(
-                    //    (catData) => CategoryItem(
-                    //      catData.title,
-                    //      catData.assetImage,
-                    //    ),
-                    //  ).toList(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 1.1,
-                      crossAxisSpacing: 20,
-                      mainAxisSpacing: 10,
-                    ),
-                  );
+                  if (snapshot.hasData) {
+                    List<QueryDocumentSnapshot> _docSnap = snapshot.data.docs;
+                    print('PRINT THIS HERE : - ${_docSnap[0].data()}');
+                    return GridView.builder(
+                      itemCount: _docSnap.length,
+                      physics: const BouncingScrollPhysics(
+                          parent: AlwaysScrollableScrollPhysics()),
+                      itemBuilder: (context, index) {
+                        return CategoryItem(
+                          _docSnap[index].data()['name'],
+                          _docSnap[index].data()['image'],
+                          _docSnap[index].id,
+                        );
+                      },
+                      // Demo_Example.map(
+                      //    (catData) => CategoryItem(
+                      //      catData.title,
+                      //      catData.assetImage,
+                      //    ),
+                      //  ).toList(),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: 1.1,
+                        crossAxisSpacing: 20,
+                        mainAxisSpacing: 10,
+                      ),
+                    );
+                  }
                 }
                 return Center(
                   child: CircularProgressIndicator(backgroundColor: kdarkBlue),

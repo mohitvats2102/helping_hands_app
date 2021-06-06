@@ -4,6 +4,8 @@ import 'package:helping_hands_app/constant.dart';
 
 import '../widget/worker_item.dart';
 
+bool counter = false;
+
 class WorkerScreen extends StatefulWidget {
   static const String workerscreen = '/workerscreen';
 
@@ -13,17 +15,38 @@ class WorkerScreen extends StatefulWidget {
 
 class _WorkerScreenState extends State<WorkerScreen> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  List workersList;
+  String title;
+  String _imageUrl;
+  String _docId;
+
+  @override
+  void didChangeDependencies() async {
+    super.didChangeDependencies();
+    final routeArgs =
+        ModalRoute.of(context).settings.arguments as Map<String, String>;
+    title = routeArgs['title'];
+    _imageUrl = routeArgs['imageUrl'];
+    _docId = routeArgs['docId'];
+    // print('DOC ID HERE $_docId');
+    final DocumentSnapshot _docSnap =
+        await _firestore.doc('categories/$_docId').get();
+    workersList = _docSnap.data()['workersList'];
+    print('WORKER LIST HERE :- $workersList');
+  }
 
   @override
   Widget build(BuildContext context) {
+    // final routeArgs =
+    //     ModalRoute.of(context).settings.arguments as Map<String, String>;
+    // final title = routeArgs['title'];
+    // final _imageUrl = routeArgs['imageUrl'];
+    // final _docId = routeArgs['docId'];
+
     MediaQueryData _mediaQuery = MediaQuery.of(context);
     final double _mainScreenHeight = (_mediaQuery.size.height) -
         (_mediaQuery.padding.top + _mediaQuery.padding.bottom + 56);
-    final routeArgs =
-        ModalRoute.of(context).settings.arguments as Map<String, String>;
 
-    final title = routeArgs['title'];
-    final _imageUrl = routeArgs['imageUrl'];
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       body: Stack(
@@ -84,60 +107,73 @@ class _WorkerScreenState extends State<WorkerScreen> {
                 ),
               ),
               child: Padding(
-                  padding: const EdgeInsets.only(
-                      bottom: 5, right: 5, top: 15, left: 5),
-                  child: title == 'Electrician'
-                      ? RefreshIndicator(
-                          color: kdarkBlue,
-                          onRefresh: () async {
-                            setState(() {});
-                          },
-                          child: FutureBuilder<QuerySnapshot>(
-                            future: _firestore
-                                .collection('categories/electrician/workers')
-                                .get(),
-                            builder: (context, asyncSnapshot) {
-                              if (asyncSnapshot.hasError) {
-                                return Center(
-                                  child: Text(
-                                      'Something went wrong!!\nPlease Try again later'),
-                                );
-                              }
-                              if (asyncSnapshot.connectionState ==
-                                  ConnectionState.done) {
-                                return ListView.builder(
-                                  physics: const BouncingScrollPhysics(
-                                      parent: AlwaysScrollableScrollPhysics()),
-                                  itemCount: asyncSnapshot.data.docs.length,
-                                  itemBuilder: (ctx, index) {
-                                    final _workerDoc =
-                                        asyncSnapshot.data.docs[index];
-                                    // print(_workerDoc.id);
-                                    final _workerData = _workerDoc.data();
-                                    return WorkerItem(
-                                      name: _workerData['name'],
-                                      rating:
-                                          double.parse(_workerData['rating']),
-                                      imageUrl: _workerData['image'],
-                                      charges: _workerData['charges'],
-                                      shopName: _workerData['shopname'],
-                                      contact: _workerData['contact'],
-                                      address: _workerData['address'],
-                                    );
-                                  },
-                                );
-                              }
+                padding: const EdgeInsets.only(
+                    bottom: 5, right: 5, top: 15, left: 5),
+                child: workersList != []
+                    ? RefreshIndicator(
+                        color: kdarkBlue,
+                        onRefresh: () async {
+                          setState(() {});
+                        },
+                        child: FutureBuilder<QuerySnapshot>(
+                          future: _firestore.collection('workers').get(),
+                          builder: (context, asyncSnapshot) {
+                            if (asyncSnapshot.hasError) {
                               return Center(
-                                child: CircularProgressIndicator(
-                                  backgroundColor: kdarkBlue,
-                                ),
+                                child: Text(
+                                    'Something went wrong!!\nPlease Try again later'),
                               );
-                            },
-                          ),
-                        )
-                      : Center(
-                          child: Text('Coming soon.....'),
-                        )),
+                            }
+                            if (asyncSnapshot.connectionState ==
+                                ConnectionState.done) {
+                              List<QueryDocumentSnapshot> categoryWorker;
+                              //  if (workersList != null) {
+                              categoryWorker =
+                                  asyncSnapshot.data.docs.where((docSnap) {
+                                return workersList.contains(docSnap.id);
+                              }).toList();
+                              //}
+                              //print('FINAL OUTPUT OF WORKERS $categoryWorker');
+                              // for (int i = 0; i < categoryWorker.length; i++) {
+                              //   print(
+                              //       'FINAL OUTPUT OF WORKERS ${categoryWorker[i].data()}');
+                              // }
+                              return ListView.builder(
+                                physics: const BouncingScrollPhysics(
+                                    parent: AlwaysScrollableScrollPhysics()),
+                                itemCount: categoryWorker.length,
+                                itemBuilder: (ctx, index) {
+                                  // QueryDocumentSnapshot document=workersList[index];
+                                  final _workerDoc = categoryWorker[index];
+                                  // print(_workerDoc.id);
+                                  final _workerData = _workerDoc.data();
+                                  return WorkerItem(
+                                    name: _workerData['name'],
+                                    rating: double.parse(_workerData['rating']),
+                                    imageUrl: _workerData['image'],
+                                    charges: _workerData['charges'],
+                                    shopName: _workerData['shopname'],
+                                    contact: _workerData['contact'],
+                                    address: _workerData['address'],
+                                  );
+                                },
+                              );
+                            }
+                            return Center(
+                              child: CircularProgressIndicator(
+                                backgroundColor: kdarkBlue,
+                              ),
+                            );
+                          },
+                        ),
+                      )
+                    : Center(
+                        child: Text('Coming soon.....',
+                            style: TextStyle(
+                              color: Colors.black,
+                            )),
+                      ),
+              ),
             ),
           ),
         ],

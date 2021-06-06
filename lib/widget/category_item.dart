@@ -5,18 +5,16 @@ import '../screens/worker_screen.dart';
 class CategoryItem extends StatelessWidget {
   final String title;
   final String imageUrl;
+  final String docId;
 
-  CategoryItem(this.title, this.imageUrl);
+  CategoryItem(this.title, this.imageUrl, this.docId);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => Navigator.of(context).pushNamed(
         WorkerScreen.workerscreen,
-        arguments: {
-          'title': title,
-          'imageUrl': imageUrl,
-        },
+        arguments: {'title': title, 'imageUrl': imageUrl, 'docId': docId},
       ),
       splashColor: Theme.of(context).primaryColor,
       child: Card(
