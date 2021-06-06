@@ -27,6 +27,10 @@ class _BookingScreenState extends State<BookingScreen> {
   String _address = '';
   String _phoneNumber = '';
 
+  DocumentSnapshot _userDocSnap;
+  String userUID;
+  List userBookingsDocIDs=[];
+
   //final _formKey = GlobalKey<FormState>();
   // TextEditingController _nameController = TextEditingController();
   // TextEditingController _addressController = TextEditingController();
@@ -53,25 +57,19 @@ class _BookingScreenState extends State<BookingScreen> {
   // }
 
   void getUserData() async {
-    final String userUID = _auth.currentUser.uid;
-    // final QuerySnapshot _collectionSnap =
-    //     await _firestore.collection('users').get();
-    // print('USer Email : $userEmail');
-    // var val = _collectionSnap.docs.contains(userEmail);
-    // print('Value of val : $val');
-    // if (val) {
-    //   print('in val if');
-    final DocumentSnapshot _docSnap =
+    userUID = _auth.currentUser.uid;
+
+     _userDocSnap =
         await _firestore.collection('users').doc(userUID).get();
-    print('_docSnap : $_docSnap');
-    print('Data in User Doc : ${_docSnap.data()}');
+    print('_docSnap : $_userDocSnap');
+    print('Data in User Doc : ${_userDocSnap.data()}');
     setState(() {
       _showProgressIndicator = false;
     });
-    if (_docSnap.data() != null) {
-      _name = _docSnap.data()['name'];
-      _address = _docSnap.data()['address'];
-      _phoneNumber = _docSnap.data()['contact'];
+    if (_userDocSnap.data() != null) {
+      _name = _userDocSnap.data()['name'];
+      _address = _userDocSnap.data()['address'];
+      _phoneNumber = _userDocSnap.data()['contact'];
 
       // _nameController.text = _name;
       // _addressController.text = _address;
@@ -140,8 +138,26 @@ class _BookingScreenState extends State<BookingScreen> {
   }
 
   Future<void> _tryConfirmBooking() async {
-    Duration dummyDelay = Duration(seconds: 2);
-    await Future.delayed(dummyDelay);
+    String bookingDocId;
+   await _firestore.collection('bookings').add({
+        'booker':_userDocSnap.data()['name'],
+        'booker_address':_userDocSnap.data()['address'],
+        'booker_contact':_userDocSnap.data()['contact'],
+        'booking_date':DateFormat.yMd().format(_pickedDate),
+        'booking_time':_pickedTime.format(context).toString(),
+   }).then((docRef){
+     print('HERE IS THE DOC  ID : '+docRef.id);
+     bookingDocId=docRef.id;
+   });
+   // userBookingsDocIDs=_userDocSnap.data()['bookings'];
+   // userBookingsDocIDs.add(bookingDocId);
+   await _firestore.collection('users').doc(userUID).update({
+     'bookings':FieldValue.arrayUnion([bookingDocId])
+   });
+
+    // Duration dummyDelay = Duration(seconds: 2);
+    // await Future.delayed(dummyDelay);
+
   }
 
   Widget buildRow(IconData icon, String detail) {

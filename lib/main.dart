@@ -1,4 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,6 +10,7 @@ import './screens/category_screen.dart';
 import './screens/confirm_booking.dart';
 import './screens/user_profile_screen.dart';
 import './screens/worker_detail_screen.dart';
+import './screens/user_bookings.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -98,6 +99,15 @@ class MyApp extends StatelessWidget {
               type: PageTransitionType.rightToLeftWithFade,
               settings:
                   settings, //setting argument is used when we are passing Data through NamedRoutes just like in WorkerScreen()
+            );
+            break;
+          case UserBookings.user_booking_route:
+            return PageTransition(
+              child: UserBookings(),
+              curve: Curves.linear,
+              type: PageTransitionType.rightToLeftWithFade,
+              settings:
+              settings, //setting argument is used when we are passing Data through NamedRoutes just like in WorkerScreen()
             );
             break;
           default:

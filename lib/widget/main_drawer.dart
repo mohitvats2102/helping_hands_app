@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:helping_hands_app/constant.dart';
 
 import '../screens/user_profile_screen.dart';
+import '../screens/user_bookings.dart';
 
 class MainDrawer extends StatelessWidget {
   final String userName;
@@ -89,6 +90,11 @@ class MainDrawer extends StatelessWidget {
                   arguments: userName);
             },
           ),
+          SizedBox(height: 10),
+          buildListTile('Your Bookings', Icons.book,(){
+            Navigator.of(context).pop();
+            Navigator.of(context).pushNamed(UserBookings.user_booking_route);
+          }),
           SizedBox(height: 10),
           buildListTile(
             'User Privacy Policy',
