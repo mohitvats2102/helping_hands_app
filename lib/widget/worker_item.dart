@@ -11,6 +11,7 @@ class WorkerItem extends StatelessWidget {
   final String address;
   final String contact;
   final String shopName;
+  final String workerDocID;
   WorkerItem({
     this.name,
     this.rating,
@@ -19,6 +20,7 @@ class WorkerItem extends StatelessWidget {
     this.shopName,
     this.address,
     this.contact,
+    this.workerDocID,
   });
   @override
   Widget build(BuildContext context) {
@@ -34,7 +36,8 @@ class WorkerItem extends StatelessWidget {
             'charges': charges,
             'address': address,
             'contact': contact,
-            'shopname': shopName
+            'shopname': shopName,
+            'workerDocID': workerDocID,
           },
         );
         //if (val != null) Navigator.of(context).pop();

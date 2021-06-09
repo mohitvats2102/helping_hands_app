@@ -29,7 +29,8 @@ class _BookingScreenState extends State<BookingScreen> {
 
   DocumentSnapshot _userDocSnap;
   String userUID;
-  List userBookingsDocIDs=[];
+  List userBookingsDocIDs = [];
+  String workerDocID;
 
   //final _formKey = GlobalKey<FormState>();
   // TextEditingController _nameController = TextEditingController();
@@ -59,10 +60,10 @@ class _BookingScreenState extends State<BookingScreen> {
   void getUserData() async {
     userUID = _auth.currentUser.uid;
 
-     _userDocSnap =
-        await _firestore.collection('users').doc(userUID).get();
+    _userDocSnap = await _firestore.collection('users').doc(userUID).get();
     print('_docSnap : $_userDocSnap');
     print('Data in User Doc : ${_userDocSnap.data()}');
+    print('HERE IS THE DOC ID : ' + _userDocSnap.id);
     setState(() {
       _showProgressIndicator = false;
     });
@@ -139,25 +140,33 @@ class _BookingScreenState extends State<BookingScreen> {
 
   Future<void> _tryConfirmBooking() async {
     String bookingDocId;
-   await _firestore.collection('bookings').add({
-        'booker':_userDocSnap.data()['name'],
-        'booker_address':_userDocSnap.data()['address'],
-        'booker_contact':_userDocSnap.data()['contact'],
-        'booking_date':DateFormat.yMd().format(_pickedDate),
-        'booking_time':_pickedTime.format(context).toString(),
-   }).then((docRef){
-     print('HERE IS THE DOC  ID : '+docRef.id);
-     bookingDocId=docRef.id;
-   });
-   // userBookingsDocIDs=_userDocSnap.data()['bookings'];
-   // userBookingsDocIDs.add(bookingDocId);
-   await _firestore.collection('users').doc(userUID).update({
-     'bookings':FieldValue.arrayUnion([bookingDocId])
-   });
+    DocumentSnapshot _bookedWorkerData =
+        await _firestore.collection('workers').doc(workerDocID).get();
+    await _firestore.collection('bookings').add({
+      'booker': _userDocSnap.data()['name'],
+      'booker_address': _userDocSnap.data()['address'],
+      'booker_contact': _userDocSnap.data()['contact'],
+      'booking_date': DateFormat.yMd().format(_pickedDate),
+      'booking_time': _pickedTime.format(context).toString(),
+      'worker_name': _bookedWorkerData.data()['name'],
+      'status': 'pending',
+    }).then((docRef) {
+      //print('HERE IS THE DOC  ID : '+docRef.id);
+      bookingDocId = docRef.id;
+    });
+
+    await _firestore.collection('users').doc(userUID).update({
+      'bookings': FieldValue.arrayUnion([bookingDocId]),
+      'totalBookings': FieldValue.increment(1),
+    });
+
+    await _firestore.collection('workers').doc(workerDocID).update({
+      'bookings': FieldValue.arrayUnion([bookingDocId]),
+      'totalBookings': FieldValue.increment(1),
+    });
 
     // Duration dummyDelay = Duration(seconds: 2);
     // await Future.delayed(dummyDelay);
-
   }
 
   Widget buildRow(IconData icon, String detail) {
@@ -189,6 +198,9 @@ class _BookingScreenState extends State<BookingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final _routeArgs =
+        ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
+    workerDocID = _routeArgs['workerDocID'] as String;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,

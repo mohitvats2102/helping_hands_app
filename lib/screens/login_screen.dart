@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
@@ -17,6 +18,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   bool _isStartRegister = false;
 
@@ -25,10 +27,50 @@ class _LoginScreenState extends State<LoginScreen> {
       _isStartRegister = true;
     });
     try {
-      await signInWithGoogle();
-      setState(() {
-        _isStartRegister = false;
-      });
+      UserCredential _loggedInUser = await signInWithGoogle();
+
+      //geeting workers collection
+      QuerySnapshot _workerCollection =
+          await _firestore.collection('workers').get();
+
+      //getting all documents from workers collection
+      List<QueryDocumentSnapshot> _workerDocIDs =
+          _workerCollection.docs.toList();
+
+      bool _doesContain = false;
+
+      //checking if current workerID already exists in worker collection
+      for (int i = 0; i < _workerDocIDs.length; i++) {
+        if (_workerDocIDs[i].id == _loggedInUser.user.uid) {
+          _doesContain = true;
+          break;
+        }
+      }
+
+      if (_doesContain) {
+        await showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text(
+                'You are already registered as Worker with same email-id',
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Ok'),
+                ),
+              ],
+            );
+          },
+        );
+        setState(() {
+          _isStartRegister = false;
+        });
+        return;
+      }
       Navigator.pushReplacementNamed(context, CategoryScreen.categoryScreen);
     } catch (e) {
       setState(() {

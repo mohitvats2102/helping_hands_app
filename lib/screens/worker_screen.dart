@@ -155,6 +155,7 @@ class _WorkerScreenState extends State<WorkerScreen> {
                                     shopName: _workerData['shopname'],
                                     contact: _workerData['contact'],
                                     address: _workerData['address'],
+                                    workerDocID: _workerDoc.id,
                                   );
                                 },
                               );

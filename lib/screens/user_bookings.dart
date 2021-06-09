@@ -57,11 +57,19 @@ class _UserBookingsState extends State<UserBookings> {
                     children: [
                       ListTile(
                         title: Text(
-                          userBookings[i].data()['booker'],
+                          userBookings[i].data()['worker_name'],
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
                           ),
+                        ),
+                        leading: CircleAvatar(
+                          backgroundColor: userBookings[i].data()['status'] ==
+                                  'pending'
+                              ? Colors.yellow
+                              : userBookings[i].data()['status'] == 'accepted'
+                                  ? Colors.green
+                                  : Colors.red,
                         ),
                         subtitle: Text(
                           userBookings[i].data()['booking_date'],

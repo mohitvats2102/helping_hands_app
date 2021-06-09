@@ -13,16 +13,17 @@ class WorkerDetailScreen extends StatelessWidget {
     final double _mainScreenHeight = (_mediaQuery.size.height) -
         (_mediaQuery.padding.top + _mediaQuery.padding.bottom + 56);
 
-    final routeArgs =
+    final _routeArgs =
         ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
 
-    final workerName = routeArgs['name'];
-    final workerRating = routeArgs['rating'];
-    final String workerImageUrl = routeArgs['imageUrl'];
-    final String charges = routeArgs['charges'];
-    final String address = routeArgs['address'];
-    final String contact = routeArgs['contact'];
-    final String shopName = routeArgs['shopname'];
+    final workerName = _routeArgs['name'];
+    final workerRating = _routeArgs['rating'];
+    final String workerImageUrl = _routeArgs['imageUrl'];
+    final String charges = _routeArgs['charges'];
+    final String address = _routeArgs['address'];
+    final String contact = _routeArgs['contact'];
+    final String shopName = _routeArgs['shopname'];
+    final String workerDocID = _routeArgs['workerDocID'];
 
     return Scaffold(
       body: Stack(
@@ -108,6 +109,7 @@ class WorkerDetailScreen extends StatelessWidget {
                           BookingScreen.bookingPageRoute,
                           arguments: {
                             'image': workerImageUrl,
+                            'workerDocID': workerDocID,
                           },
                         );
                         //if (val != null) Navigator.of(context).pop(val);
