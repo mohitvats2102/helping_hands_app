@@ -14,8 +14,6 @@ class CategoryScreen extends StatelessWidget {
   static const String categoryScreen = '/categoryScreen';
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  String _userImageUrl = '';
-  String _userName = '';
 
   void logout(BuildContext context) async {
     if (_auth.currentUser.providerData != null) {
@@ -30,46 +28,14 @@ class CategoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _userImageUrl = _auth.currentUser.photoURL ?? '';
-    _userName = _auth.currentUser.displayName ?? '';
     return Scaffold(
       drawer: MainDrawer(
-        imageUrl: _userImageUrl,
-        userName: _userName,
         logoutFun: logout,
         ctx: context,
       ),
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
         elevation: 0,
-        // actions: [
-        //   DropdownButtonHideUnderline(
-        //     child: DropdownButton(
-        //       icon: Padding(
-        //         padding: const EdgeInsets.only(right: 10, top: 7),
-        //         child: Icon(Icons.more_vert, color: Colors.white),
-        //       ),
-        //       items: [
-        //         DropdownMenuItem(
-        //           value: "Logout",
-        //           child: Row(
-        //             children: [
-        //               const Icon(Icons.logout, color: kdarkBlue),
-        //               const SizedBox(width: 10),
-        //               const Text("Logout", style: TextStyle(color: kdarkBlue)),
-        //             ],
-        //           ),
-        //         )
-        //       ],
-        //       onChanged: (itemIdentifier) {
-        //         if (itemIdentifier == 'Logout') {
-        //           print('User Data : ${_auth.currentUser}');
-        //           logout(context);
-        //         }
-        //       },
-        //     ),
-        //   )
-        // ],
       ),
       backgroundColor: Theme.of(context).primaryColor,
       body: SafeArea(
@@ -133,3 +99,32 @@ class CategoryScreen extends StatelessWidget {
     );
   }
 }
+
+// actions: [
+//   DropdownButtonHideUnderline(
+//     child: DropdownButton(
+//       icon: Padding(
+//         padding: const EdgeInsets.only(right: 10, top: 7),
+//         child: Icon(Icons.more_vert, color: Colors.white),
+//       ),
+//       items: [
+//         DropdownMenuItem(
+//           value: "Logout",
+//           child: Row(
+//             children: [
+//               const Icon(Icons.logout, color: kdarkBlue),
+//               const SizedBox(width: 10),
+//               const Text("Logout", style: TextStyle(color: kdarkBlue)),
+//             ],
+//           ),
+//         )
+//       ],
+//       onChanged: (itemIdentifier) {
+//         if (itemIdentifier == 'Logout') {
+//           print('User Data : ${_auth.currentUser}');
+//           logout(context);
+//         }
+//       },
+//     ),
+//   )
+// ],

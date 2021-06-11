@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:helping_hands_app/constant.dart';
+import 'package:helping_hands_app/screens/user_detail_form.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 import '../screens/category_screen.dart';
@@ -28,50 +29,32 @@ class _LoginScreenState extends State<LoginScreen> {
     });
     try {
       UserCredential _loggedInUser = await signInWithGoogle();
-
       //geeting workers collection
-      QuerySnapshot _workerCollection =
-          await _firestore.collection('workers').get();
+      QuerySnapshot _userCollection =
+          await _firestore.collection('users').get();
 
       //getting all documents from workers collection
-      List<QueryDocumentSnapshot> _workerDocIDs =
-          _workerCollection.docs.toList();
+      List<QueryDocumentSnapshot> _userDocIDs = _userCollection.docs.toList();
 
       bool _doesContain = false;
 
       //checking if current workerID already exists in worker collection
-      for (int i = 0; i < _workerDocIDs.length; i++) {
-        if (_workerDocIDs[i].id == _loggedInUser.user.uid) {
+      for (int i = 0; i < _userDocIDs.length; i++) {
+        if (_userDocIDs[i].id == _loggedInUser.user.uid) {
           _doesContain = true;
           break;
         }
       }
 
+      print('HERE IS THE DOES CONTAIN : ' + _doesContain.toString());
+
       if (_doesContain) {
-        await showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: Text(
-                'You are already registered as Worker with same email-id',
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text('Ok'),
-                ),
-              ],
-            );
-          },
-        );
-        setState(() {
-          _isStartRegister = false;
-        });
-        return;
+        Navigator.pushReplacementNamed(context, CategoryScreen.categoryScreen);
+      } else {
+        Navigator.of(context).pushReplacementNamed(
+            UserDetailForm.workerDetailForm,
+            arguments: _loggedInUser.user.uid);
       }
-      Navigator.pushReplacementNamed(context, CategoryScreen.categoryScreen);
     } catch (e) {
       setState(() {
         _isStartRegister = false;

@@ -30,7 +30,8 @@ class _BookingScreenState extends State<BookingScreen> {
   DocumentSnapshot _userDocSnap;
   String userUID;
   List userBookingsDocIDs = [];
-  String workerDocID;
+  String _workerDocID;
+  String _workerContact = '';
 
   //final _formKey = GlobalKey<FormState>();
   // TextEditingController _nameController = TextEditingController();
@@ -140,15 +141,19 @@ class _BookingScreenState extends State<BookingScreen> {
 
   Future<void> _tryConfirmBooking() async {
     String bookingDocId;
+
     DocumentSnapshot _bookedWorkerData =
-        await _firestore.collection('workers').doc(workerDocID).get();
+        await _firestore.collection('workers').doc(_workerDocID).get();
     await _firestore.collection('bookings').add({
       'booker': _userDocSnap.data()['name'],
       'booker_address': _userDocSnap.data()['address'],
       'booker_contact': _userDocSnap.data()['contact'],
       'booking_date': DateFormat.yMd().format(_pickedDate),
       'booking_time': _pickedTime.format(context).toString(),
+      //to get the name of worker i can pass it here from previous screen also just like i did it for workerContact
       'worker_name': _bookedWorkerData.data()['name'],
+      'worker_category': _bookedWorkerData.data()['category'],
+      'worker_contact': _workerContact,
       'status': 'pending',
     }).then((docRef) {
       //print('HERE IS THE DOC  ID : '+docRef.id);
@@ -160,7 +165,7 @@ class _BookingScreenState extends State<BookingScreen> {
       'totalBookings': FieldValue.increment(1),
     });
 
-    await _firestore.collection('workers').doc(workerDocID).update({
+    await _firestore.collection('workers').doc(_workerDocID).update({
       'bookings': FieldValue.arrayUnion([bookingDocId]),
       'totalBookings': FieldValue.increment(1),
     });
@@ -200,7 +205,8 @@ class _BookingScreenState extends State<BookingScreen> {
   Widget build(BuildContext context) {
     final _routeArgs =
         ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
-    workerDocID = _routeArgs['workerDocID'] as String;
+    _workerDocID = _routeArgs['workerDocID'] as String;
+    _workerContact = _routeArgs['workerContact'] as String;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,

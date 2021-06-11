@@ -67,7 +67,7 @@ class _UserProfileState extends State<UserProfile> {
       setState(() {
         _showProgressIndicator = true;
       });
-      await _firestore.collection('users').doc(userUID).set({
+      await _firestore.collection('users').doc(userUID).update({
         'name': _name,
         'address': _address,
         'contact': _phoneNumber,
@@ -90,7 +90,6 @@ class _UserProfileState extends State<UserProfile> {
 
   @override
   Widget build(BuildContext context) {
-    String userName = ModalRoute.of(context).settings.arguments as String;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kdarkBlue,
@@ -101,7 +100,7 @@ class _UserProfileState extends State<UserProfile> {
         inAsyncCall: _showProgressIndicator,
         child: SafeArea(
           child: BaseUI(
-            text1: userName,
+            text1: _name,
             text2: _auth.currentUser.email,
             fontsize1: 45,
             fontsize2: 20,

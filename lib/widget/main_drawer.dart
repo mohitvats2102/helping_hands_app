@@ -5,12 +5,10 @@ import '../screens/user_profile_screen.dart';
 import '../screens/user_bookings.dart';
 
 class MainDrawer extends StatelessWidget {
-  final String userName;
-  final String imageUrl;
   final void Function(BuildContext context) logoutFun;
   final BuildContext ctx;
 
-  MainDrawer({this.imageUrl, this.userName, this.logoutFun, this.ctx});
+  MainDrawer({this.logoutFun, this.ctx});
 
   Widget buildListTile(String text, IconData icon, Function onTap) {
     return ListTile(
@@ -29,55 +27,40 @@ class MainDrawer extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            padding: const EdgeInsets.only(top: 70),
+            padding: const EdgeInsets.only(top: 30, left: 20),
             color: kdarkBlue,
             width: double.infinity,
-            height: 200,
-            child: SafeArea(
-              child: ListTile(
-                leading: ClipRRect(
-                  borderRadius: BorderRadius.circular(30),
-                  child: imageUrl != ''
-                      ? FadeInImage(
-                          height: 58,
-                          width: 56,
-                          fit: BoxFit.fill,
-                          placeholder:
-                              AssetImage('assets/images/user_avatar.PNG'),
-                          image: NetworkImage(imageUrl),
-                        )
-                      : AssetImage('assets/images/user_avatar.PNG'),
+            height: 150,
+            child: Row(
+              children: [
+                CircleAvatar(
+                  radius: 25,
+                  backgroundImage: AssetImage('assets/images/logo2.png'),
                 ),
-
-                // CircleAvatar(
-                //   backgroundColor: Colors.white,
-                //   radius: 28,
-                //   backgroundImage: imageUrl != ''
-                //       ? FadeInImage(
-                //           placeholder: AssetImage('assets/images/logo.jpg'),
-                //           image: NetworkImage(imageUrl),
-                //         )
-                //       : AssetImage('assets/images/ee.PNG'),
-                // ),
-                title: Text(
-                  'Welcome!',
-                  style: TextStyle(
-                    fontSize: 30,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 1,
-                  ),
+                SizedBox(width: 20),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Welcome to',
+                      style: TextStyle(
+                        fontSize: 22,
+                        color: Colors.white,
+                      ),
+                    ),
+                    Text(
+                      'Helping Hands',
+                      style: TextStyle(
+                        fontSize: 22,
+                        color: Colors.white,
+                        letterSpacing: 1.5,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
                 ),
-                subtitle: Text(
-                  userName,
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.white,
-                    letterSpacing: 1.5,
-                  ),
-                  maxLines: 1,
-                ),
-              ),
+              ],
             ),
           ),
           SizedBox(height: 20),
@@ -86,12 +69,13 @@ class MainDrawer extends StatelessWidget {
             Icons.account_circle,
             () {
               Navigator.of(context).pop();
-              Navigator.of(context).pushNamed(UserProfile.userProfileScreen,
-                  arguments: userName);
+              Navigator.of(context).pushNamed(
+                UserProfile.userProfileScreen,
+              );
             },
           ),
           SizedBox(height: 10),
-          buildListTile('Your Bookings', Icons.book,(){
+          buildListTile('Your Bookings', Icons.book, () {
             Navigator.of(context).pop();
             Navigator.of(context).pushNamed(UserBookings.user_booking_route);
           }),
@@ -121,3 +105,49 @@ class MainDrawer extends StatelessWidget {
     );
   }
 }
+
+// SafeArea(
+// child: ListTile(
+// leading: ClipRRect(
+// borderRadius: BorderRadius.circular(30),
+// child: imageUrl != ''
+// ? FadeInImage(
+// height: 58,
+// width: 56,
+// fit: BoxFit.fill,
+// placeholder:
+// AssetImage('assets/images/user_avatar.PNG'),
+// image: NetworkImage(imageUrl),
+// )
+// : AssetImage('assets/images/user_avatar.PNG'),
+// ),
+//
+// // CircleAvatar(
+// //   backgroundColor: Colors.white,
+// //   radius: 28,
+// //   backgroundImage: imageUrl != ''
+// //       ? FadeInImage(
+// //           placeholder: AssetImage('assets/images/logo.jpg'),
+// //           image: NetworkImage(imageUrl),
+// //         )
+// //       : AssetImage('assets/images/ee.PNG'),
+// // ),
+// title: Text(
+// 'Welcome!',
+// style: TextStyle(
+// fontSize: 30,
+// color: Colors.white,
+// fontWeight: FontWeight.w600,
+// letterSpacing: 1,
+// ),
+// ),
+// subtitle: Text(
+// userName,
+// style: TextStyle(
+// fontSize: 18,
+// color: Colors.white,
+// letterSpacing: 1.5,
+// ),
+// maxLines: 1,
+// ),
+// )

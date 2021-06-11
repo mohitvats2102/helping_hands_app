@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:helping_hands_app/constant.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'confirm_booking.dart';
 
 class WorkerDetailScreen extends StatelessWidget {
   static const String worker_route =
       '/workerroute'; //remember not to give name same as WorkerScreen it will cause trouble
+
+  void customLaunch(command) async {
+    if (await canLaunch(command)) {
+      await launch(command);
+    } else {
+      print('can\'t make call');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -110,6 +119,7 @@ class WorkerDetailScreen extends StatelessWidget {
                           arguments: {
                             'image': workerImageUrl,
                             'workerDocID': workerDocID,
+                            'workerContact': contact,
                           },
                         );
                         //if (val != null) Navigator.of(context).pop(val);
@@ -128,7 +138,9 @@ class WorkerDetailScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(15),
                       ),
                       color: kdarkBlue,
-                      onPressed: () {},
+                      onPressed: () {
+                        customLaunch('tel:+91 ' + contact);
+                      },
                       icon: Icon(Icons.phone, color: Colors.white),
                       label: Text(
                         'Call Now',

@@ -15,24 +15,33 @@ class WorkerScreen extends StatefulWidget {
 
 class _WorkerScreenState extends State<WorkerScreen> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  List workersList;
-  String title;
-  String _imageUrl;
-  String _docId;
+  List _workersList = [];
+  String _title = '';
+  String _imageUrl = '';
+  String _docId = '';
+  bool isNull = false;
 
   @override
   void didChangeDependencies() async {
-    super.didChangeDependencies();
+    isNull = false;
     final routeArgs =
         ModalRoute.of(context).settings.arguments as Map<String, String>;
-    title = routeArgs['title'];
+    _title = routeArgs['title'];
     _imageUrl = routeArgs['imageUrl'];
     _docId = routeArgs['docId'];
     // print('DOC ID HERE $_docId');
-    final DocumentSnapshot _docSnap =
-        await _firestore.doc('categories/$_docId').get();
-    workersList = _docSnap.data()['workersList'];
-    print('WORKER LIST HERE :- $workersList');
+    try {
+      final DocumentSnapshot _docSnap =
+          await _firestore.doc('categories/$_docId').get();
+      _workersList = _docSnap.data()['workersList'];
+      if (_workersList.length == 0) isNull = true;
+
+      setState(() {});
+    } catch (e) {
+      print(e.toString());
+    }
+    print('WORKER LIST HERE :- $_workersList');
+    super.didChangeDependencies();
   }
 
   @override
@@ -60,7 +69,7 @@ class _WorkerScreenState extends State<WorkerScreen> {
               topLeft: Radius.circular(10),
             ),
             child: Hero(
-              tag: 'animation$title',
+              tag: 'animation$_title',
               child: Image.network(
                 _imageUrl,
                 height: _mainScreenHeight * 0.40,
@@ -85,7 +94,7 @@ class _WorkerScreenState extends State<WorkerScreen> {
                 ),
                 SizedBox(width: 20),
                 Text(
-                  title,
+                  _title,
                   style: TextStyle(
                     color: Colors.black87,
                     fontSize: 20,
@@ -109,11 +118,12 @@ class _WorkerScreenState extends State<WorkerScreen> {
               child: Padding(
                 padding: const EdgeInsets.only(
                     bottom: 5, right: 5, top: 15, left: 5),
-                child: workersList != []
+                child: !isNull
                     ? RefreshIndicator(
                         color: kdarkBlue,
                         onRefresh: () async {
-                          setState(() {});
+                          didChangeDependencies();
+                          //setState(() {});
                         },
                         child: FutureBuilder<QuerySnapshot>(
                           future: _firestore.collection('workers').get(),
@@ -130,7 +140,7 @@ class _WorkerScreenState extends State<WorkerScreen> {
                               //  if (workersList != null) {
                               categoryWorker =
                                   asyncSnapshot.data.docs.where((docSnap) {
-                                return workersList.contains(docSnap.id);
+                                return _workersList.contains(docSnap.id);
                               }).toList();
                               //}
                               //print('FINAL OUTPUT OF WORKERS $categoryWorker');
@@ -169,10 +179,12 @@ class _WorkerScreenState extends State<WorkerScreen> {
                         ),
                       )
                     : Center(
-                        child: Text('Coming soon.....',
-                            style: TextStyle(
-                              color: Colors.black,
-                            )),
+                        child: Text(
+                          'Coming soon.....',
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
+                        ),
                       ),
               ),
             ),
