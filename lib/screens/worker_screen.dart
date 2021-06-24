@@ -137,17 +137,12 @@ class _WorkerScreenState extends State<WorkerScreen> {
                             if (asyncSnapshot.connectionState ==
                                 ConnectionState.done) {
                               List<QueryDocumentSnapshot> categoryWorker;
-                              //  if (workersList != null) {
+
                               categoryWorker =
                                   asyncSnapshot.data.docs.where((docSnap) {
                                 return _workersList.contains(docSnap.id);
                               }).toList();
-                              //}
-                              //print('FINAL OUTPUT OF WORKERS $categoryWorker');
-                              // for (int i = 0; i < categoryWorker.length; i++) {
-                              //   print(
-                              //       'FINAL OUTPUT OF WORKERS ${categoryWorker[i].data()}');
-                              // }
+
                               return ListView.builder(
                                 physics: const BouncingScrollPhysics(
                                     parent: AlwaysScrollableScrollPhysics()),
