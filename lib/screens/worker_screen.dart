@@ -40,7 +40,7 @@ class _WorkerScreenState extends State<WorkerScreen> {
     } catch (e) {
       print(e.toString());
     }
-    print('WORKER LIST HERE :- $_workersList');
+
     super.didChangeDependencies();
   }
 
@@ -167,7 +167,7 @@ class _WorkerScreenState extends State<WorkerScreen> {
                             }
                             return Center(
                               child: CircularProgressIndicator(
-                                backgroundColor: kdarkBlue,
+                                color: kdarkBlue,
                               ),
                             );
                           },

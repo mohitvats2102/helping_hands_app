@@ -18,7 +18,6 @@ class CategoryScreen extends StatelessWidget {
   void logout(BuildContext context) async {
     if (_auth.currentUser.providerData != null) {
       if (_auth.currentUser.providerData[0].providerId == 'google.com') {
-        print('In If BLOCK');
         await GoogleSignIn().disconnect();
       }
     }
@@ -61,7 +60,7 @@ class CategoryScreen extends StatelessWidget {
                 if (snapshot.connectionState == ConnectionState.done) {
                   if (snapshot.hasData) {
                     List<QueryDocumentSnapshot> _docSnap = snapshot.data.docs;
-                    print('PRINT THIS HERE : - ${_docSnap[0].data()}');
+
                     return GridView.builder(
                       itemCount: _docSnap.length,
                       physics: const BouncingScrollPhysics(
@@ -73,12 +72,6 @@ class CategoryScreen extends StatelessWidget {
                           _docSnap[index].id,
                         );
                       },
-                      // Demo_Example.map(
-                      //    (catData) => CategoryItem(
-                      //      catData.title,
-                      //      catData.assetImage,
-                      //    ),
-                      //  ).toList(),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         childAspectRatio: 1.1,
@@ -89,7 +82,7 @@ class CategoryScreen extends StatelessWidget {
                   }
                 }
                 return Center(
-                  child: CircularProgressIndicator(backgroundColor: kdarkBlue),
+                  child: CircularProgressIndicator(color: kdarkBlue),
                 );
               },
             ),

@@ -62,9 +62,7 @@ class _BookingScreenState extends State<BookingScreen> {
     userUID = _auth.currentUser.uid;
 
     _userDocSnap = await _firestore.collection('users').doc(userUID).get();
-    print('_docSnap : $_userDocSnap');
-    print('Data in User Doc : ${_userDocSnap.data()}');
-    print('HERE IS THE DOC ID : ' + _userDocSnap.id);
+
     setState(() {
       _showProgressIndicator = false;
     });
@@ -98,7 +96,7 @@ class _BookingScreenState extends State<BookingScreen> {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('Ok'),
+                child: Text('OK'),
               )
             ],
           );

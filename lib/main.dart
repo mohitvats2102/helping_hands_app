@@ -18,51 +18,45 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await Firebase.initializeApp();
-  runApp(MyApp());
+  User _firebaseUser = FirebaseAuth.instance.currentUser;
+  if (_firebaseUser != null) {
+    bool _doesContain = false;
+    FirebaseFirestore _firestore = FirebaseFirestore.instance;
+    QuerySnapshot _usersCollection = await _firestore.collection('users').get();
+    List<QueryDocumentSnapshot> _usersCollectionDOC = _usersCollection.docs;
+
+    for (int i = 0; i < _usersCollectionDOC.length; i++) {
+      if (_usersCollectionDOC[i].id == _firebaseUser.uid) {
+        _doesContain = true;
+      }
+    }
+    runApp(MyApp(doesContain: _doesContain));
+  } else
+    runApp(MyApp(doesContain: null));
 }
 
-class MyApp extends StatefulWidget {
-  @override
-  _MyAppState createState() => _MyAppState();
-}
+class MyApp extends StatelessWidget {
+  final bool doesContain;
+  MyApp({this.doesContain});
 
-class _MyAppState extends State<MyApp> {
   final User _firebaseUser = FirebaseAuth.instance.currentUser;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  bool _doesContain = false;
+
   Widget _firstWidget;
 
   @override
-  void didChangeDependencies() async {
-    // TODO: implement didChangeDependencies
-    if (_firebaseUser != null) {
-      QuerySnapshot _userCollection =
-          await _firestore.collection('users').get();
-
-      //getting all documents from workers collection
-      List<QueryDocumentSnapshot> _userDocIDs = _userCollection.docs.toList();
-
-      _doesContain = false;
-
-      //checking if current workerID already exists in worker collection
-      for (int i = 0; i < _userDocIDs.length; i++) {
-        if (_userDocIDs[i].id == _firebaseUser.uid) {
-          _doesContain = true;
-          break;
-        }
-      }
-
-      if (_doesContain) setState(() {});
-    }
-    super.didChangeDependencies();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    if (_firebaseUser == null || !_doesContain) {
-      _firstWidget = LoginScreen();
+    if (doesContain == null) {
+      if (_firebaseUser == null) {
+        _firstWidget = LoginScreen();
+      } else {
+        _firstWidget = CategoryScreen();
+      }
     } else {
-      _firstWidget = CategoryScreen();
+      if (!doesContain)
+        _firstWidget = UserDetailForm();
+      else
+        _firstWidget = CategoryScreen();
     }
     return MaterialApp(
       debugShowCheckedModeBanner: false,

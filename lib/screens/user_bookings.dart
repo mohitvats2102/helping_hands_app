@@ -93,6 +93,28 @@ class _UserBookingsState extends State<UserBookings> {
                           child: Column(
                             children: [
                               Row(
+                                children: [
+                                  Text(
+                                    'Name : ',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
+                                      color: Colors.green,
+                                    ),
+                                  ),
+                                  Spacer(),
+                                  Text(
+                                    'Category : ',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
+                                      color: Colors.green,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 30),
+                              Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
@@ -121,6 +143,30 @@ class _UserBookingsState extends State<UserBookings> {
                                   ),
                                 ],
                               ),
+                              SizedBox(height: 15),
+                              Divider(height: 1.5, color: kdarkBlue),
+                              SizedBox(height: 15),
+                              Row(
+                                children: [
+                                  Text(
+                                    'TIME :',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
+                                      color: Colors.green,
+                                    ),
+                                  ),
+                                  Spacer(),
+                                  Text(
+                                    'DATE :',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
+                                      color: Colors.green,
+                                    ),
+                                  ),
+                                ],
+                              ),
                               SizedBox(height: 30),
                               Row(
                                 mainAxisAlignment:
@@ -144,7 +190,9 @@ class _UserBookingsState extends State<UserBookings> {
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 30),
+                              SizedBox(height: 15),
+                              Divider(height: 1.5, color: kdarkBlue),
+                              SizedBox(height: 15),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -207,12 +255,6 @@ class _UserBookingsState extends State<UserBookings> {
                     );
                   },
                   itemCount: _userBookings.length,
-                );
-
-                return Center(
-                  child: CircularProgressIndicator(
-                    color: kdarkBlue,
-                  ),
                 );
               },
             ),
