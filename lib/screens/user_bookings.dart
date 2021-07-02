@@ -35,7 +35,8 @@ class _UserBookingsState extends State<UserBookings> {
       userUID = _auth.currentUser.uid;
       _userDoc = await _firestore.collection('users').doc(userUID).get();
       userBookingsIDs = _userDoc.data()['bookings'];
-      if (userBookingsIDs.length == 0) _isNull = true;
+      if (userBookingsIDs == null || userBookingsIDs.length == 0)
+        _isNull = true;
       setState(() {});
     } catch (e) {
       print(e.toString());
