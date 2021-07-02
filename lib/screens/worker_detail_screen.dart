@@ -130,23 +130,23 @@ class WorkerDetailScreen extends StatelessWidget {
                         style: TextStyle(fontSize: 19),
                       ),
                     ),
-                    SizedBox(height: 20),
-                    RaisedButton.icon(
-                      textColor: Colors.white,
-                      padding: const EdgeInsets.all(10),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      color: kdarkBlue,
-                      onPressed: () {
-                        customLaunch('tel:+91 ' + contact);
-                      },
-                      icon: Icon(Icons.phone, color: Colors.white),
-                      label: Text(
-                        'Call Now',
-                        style: TextStyle(fontSize: 19),
-                      ),
-                    ),
+                    // SizedBox(height: 20),
+                    // RaisedButton.icon(
+                    //   textColor: Colors.white,
+                    //   padding: const EdgeInsets.all(10),
+                    //   shape: RoundedRectangleBorder(
+                    //     borderRadius: BorderRadius.circular(15),
+                    //   ),
+                    //   color: kdarkBlue,
+                    //   onPressed: () {
+                    //     customLaunch('tel:+91 ' + contact);
+                    //   },
+                    //   icon: Icon(Icons.phone, color: Colors.white),
+                    //   label: Text(
+                    //     'Call Now',
+                    //     style: TextStyle(fontSize: 19),
+                    //   ),
+                    // ),
                     SizedBox(height: 20)
                   ],
                 ),

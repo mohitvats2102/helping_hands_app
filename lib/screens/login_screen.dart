@@ -166,29 +166,29 @@ class _LoginScreenState extends State<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Expanded(child: Container()),
-                RaisedButton.icon(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 8, horizontal: 35),
-                  textColor: Colors.white,
-                  color: kdarkBlue,
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.phone,
-                    color: Colors.white,
-                  ),
-                  label: Text('Sign in using phone'),
-                  highlightElevation: 15,
-                ),
-                SizedBox(height: 20),
-                Text(
-                  'Or',
-                  style:
-                      TextStyle(color: kdarkBlue, fontWeight: FontWeight.w600),
-                ),
-                SizedBox(height: 20),
+                // RaisedButton.icon(
+                //   shape: RoundedRectangleBorder(
+                //     borderRadius: BorderRadius.circular(10),
+                //   ),
+                //   padding:
+                //       const EdgeInsets.symmetric(vertical: 8, horizontal: 35),
+                //   textColor: Colors.white,
+                //   color: kdarkBlue,
+                //   onPressed: () {},
+                //   icon: Icon(
+                //     Icons.phone,
+                //     color: Colors.white,
+                //   ),
+                //   label: Text('Sign in using phone'),
+                //   highlightElevation: 15,
+                // ),
+                // SizedBox(height: 20),
+                // Text(
+                //   'Or',
+                //   style:
+                //       TextStyle(color: kdarkBlue, fontWeight: FontWeight.w600),
+                // ),
+                // SizedBox(height: 20),
                 SignInButton(
                   Buttons.Google,
                   onPressed: onTapSignInWithGoogle,

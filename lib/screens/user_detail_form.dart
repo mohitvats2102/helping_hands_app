@@ -75,28 +75,28 @@ class _UserDetailFormState extends State<UserDetailForm> {
   // }
 
   void onSave() async {
-    if (_pickedImage == null) {
-      await showDialog(
-        context: context,
-        builder: (ctx) {
-          return GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            child: AlertDialog(
-              title: Text('Please Pick an image'),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text('Ok'),
-                )
-              ],
-            ),
-          );
-        },
-      );
-      return;
-    }
+    // if (_pickedImage == null) {
+    //   await showDialog(
+    //     context: context,
+    //     builder: (ctx) {
+    //       return GestureDetector(
+    //         behavior: HitTestBehavior.opaque,
+    //         child: AlertDialog(
+    //           title: Text('Please Pick an image'),
+    //           actions: [
+    //             TextButton(
+    //               onPressed: () {
+    //                 Navigator.of(context).pop();
+    //               },
+    //               child: Text('Ok'),
+    //             )
+    //           ],
+    //         ),
+    //       );
+    //     },
+    //   );
+    //   return;
+    // }
     final isValid = _formKey.currentState.validate();
     FocusScope.of(context).unfocus();
     if (isValid) {
@@ -106,25 +106,29 @@ class _UserDetailFormState extends State<UserDetailForm> {
       });
       String _userImageUrl;
       try {
-        _userImageUrl = await UserDetailFromFilling.putUserImage(
-          path1: 'users_image',
-          path2: '$_currentUserUID.jpg',
-          pickedImage: _pickedImage,
-        );
-        // final ref = _firebaseStorage
-        //     .ref()
-        //     .child('users_image')
-        //     .child('$_currentUserUID.jpg');
-        // await ref.putFile(_pickedImage).whenComplete(
-        //   () async {
-        //     _userImageUrl = await ref.getDownloadURL();
-        //   },
-        // );
+        if (_pickedImage != null) {
+          _userImageUrl = await UserDetailFromFilling.putUserImage(
+            path1: 'users_image',
+            path2: '$_currentUserUID.jpg',
+            pickedImage: _pickedImage,
+          );
+          // final ref = _firebaseStorage
+          //     .ref()
+          //     .child('users_image')
+          //     .child('$_currentUserUID.jpg');
+          // await ref.putFile(_pickedImage).whenComplete(
+          //   () async {
+          //     _userImageUrl = await ref.getDownloadURL();
+          //   },
+          // );
+        }
         await UserDetailFromFilling.createUserDoc(
           currentUserUID: _currentUserUID,
           userAddress: _userAddress,
           userContact: _userContact,
-          userImageUrl: _userImageUrl,
+          userImageUrl: _pickedImage == null
+              ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1LCcfD_jjhno3IC7VwOHLv6KLNPAq_wfqzA&usqp=CAU'
+              : _userImageUrl,
           userName: _userName,
         );
         // await _firestore.collection('users').doc(_currentUserUID).set(
