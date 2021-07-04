@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:helping_hands_app/constant.dart';
+import 'package:helping_hands_app/screens/about_us.dart';
+import 'package:helping_hands_app/screens/privacy_policy.dart';
 
 import '../screens/user_profile_screen.dart';
 import '../screens/user_bookings.dart';
@@ -83,13 +85,19 @@ class MainDrawer extends StatelessWidget {
           buildListTile(
             'User Privacy Policy',
             Icons.privacy_tip,
-            () {},
+            () {
+              Navigator.of(context).pop();
+              Navigator.of(context).pushNamed(PrivacyPolicy.privacyPolicy);
+            },
           ),
           SizedBox(height: 10),
           buildListTile(
             'About Us',
             Icons.assignment,
-            () {},
+            () {
+              Navigator.of(context).pop();
+              Navigator.of(context).pushNamed(AboutUs.aboutUs);
+            },
           ),
           SizedBox(height: 10),
           buildListTile(

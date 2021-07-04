@@ -3,7 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:helping_hands_app/screens/about_us.dart';
 import 'package:helping_hands_app/screens/login_screen.dart';
+import 'package:helping_hands_app/screens/privacy_policy.dart';
 import 'package:helping_hands_app/screens/user_detail_form.dart';
 import 'package:helping_hands_app/screens/worker_screen.dart';
 import 'package:page_transition/page_transition.dart';
@@ -133,6 +135,24 @@ class MyApp extends StatelessWidget {
           case UserDetailForm.workerDetailForm:
             return PageTransition(
               child: UserDetailForm(),
+              curve: Curves.linear,
+              type: PageTransitionType.rightToLeftWithFade,
+              settings:
+                  settings, //setting argument is used when we are passing Data through NamedRoutes just like in WorkerScreen()
+            );
+            break;
+          case AboutUs.aboutUs:
+            return PageTransition(
+              child: AboutUs(),
+              curve: Curves.linear,
+              type: PageTransitionType.rightToLeftWithFade,
+              settings:
+                  settings, //setting argument is used when we are passing Data through NamedRoutes just like in WorkerScreen()
+            );
+            break;
+          case PrivacyPolicy.privacyPolicy:
+            return PageTransition(
+              child: PrivacyPolicy(),
               curve: Curves.linear,
               type: PageTransitionType.rightToLeftWithFade,
               settings:
