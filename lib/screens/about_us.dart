@@ -4,6 +4,49 @@ class AboutUs extends StatelessWidget {
   static const String aboutUs = '/about_us';
   @override
   Widget build(BuildContext context) {
+    Widget buildRow(String p1, String p2, String n1, String n2, double r) {
+      return Row(
+        children: [
+          Expanded(
+            child: Column(
+              children: [
+                CircleAvatar(
+                  backgroundImage: AssetImage(p1),
+                  radius: r,
+                ),
+                SizedBox(height: 10),
+                Text(
+                  n1,
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                  ),
+                )
+              ],
+            ),
+          ),
+          Expanded(
+            child: Column(
+              children: [
+                CircleAvatar(
+                  backgroundImage: AssetImage(p2),
+                  radius: r,
+                ),
+                SizedBox(height: 10),
+                Text(
+                  n2,
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                  ),
+                )
+              ],
+            ),
+          ),
+        ],
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('About Us'),
@@ -67,7 +110,91 @@ class AboutUs extends StatelessWidget {
                   ),
                   textAlign: TextAlign.justify,
                 ),
-                SizedBox(height: 40),
+                SizedBox(height: 20),
+                Divider(height: 1, color: Colors.black),
+                SizedBox(height: 20),
+                Text(
+                  'Our Team',
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 20),
+                buildRow('assets/images/1.jpg', 'assets/images/2.PNG',
+                    'Naman Singhvi', 'Mohit Vats', 50),
+                SizedBox(height: 20),
+                buildRow('assets/images/3.jpg', 'assets/images/4.jpg',
+                    'Charu Singh', 'Narpat Patel', 50),
+                SizedBox(height: 20),
+                Divider(height: 1, color: Colors.black),
+                SizedBox(height: 20),
+                Text(
+                  'Developer Contact',
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 20),
+                buildRow(
+                  'assets/images/2.PNG',
+                  'assets/images/3.jpg',
+                  'Mohit Vats',
+                  'Charu Singh',
+                  30,
+                ),
+                SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'E-mail : ',
+                      style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        'appdeveloper2127@gmail.com',
+                        style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.end,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Contact : ',
+                      style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        '9660223279',
+                        style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.end,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+                Divider(height: 1, color: Colors.black),
+                SizedBox(height: 20),
                 Text(
                   'Contact Us',
                   style: TextStyle(
@@ -101,60 +228,6 @@ class AboutUs extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 40),
-                Text(
-                  'Developer Contact',
-                  style: TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'E-mail : ',
-                      style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        'mohitvatsktl@gmail.com',
-                        style: TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.end,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Contact : ',
-                      style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        '9660223279',
-                        style: TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.end,
-                      ),
-                    ),
-                  ],
-                ),
               ],
             ),
           ),
